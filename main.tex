@@ -12,14 +12,14 @@
 
 \title{Dependency-Based TAMV Extraction with spaCy/UD for Interpretable Prediction of Register, Toxicity, and VAD}
 
-\author{First Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  \texttt{email@domain} \\\And
-  Second Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  \texttt{email@domain} \\}
+\author{Jonathan Sutton Fields \\
+  Florida International University \\
+  11200 SW 8th Street, Miami, FL 33199 \\
+  \texttt{jfiel067@fiu.edu} \\\And
+  Dr. Samira Zad \\
+  Florida International University \\
+  11200 SW 8th Street, Miami, FL 33199 \\
+  \texttt{szad@fiu.edu} \\}
 
 \begin{document}
 \maketitle
@@ -29,7 +29,7 @@
   \item We present a grammar-forward feature pipeline that extracts tense--aspect--mood--voice (TAMV) from dependency parses and uses these features for interpretable prediction tasks in discourse analysis.
   \item \textbf{Second sentence (required):} We show that TAMV can be extracted reliably from dependency parses produced by a spaCy-based pipeline, and we argue that a modern Universal Dependencies (UD) representation is well-suited to robust large-scale extraction. \citep{Ramm2017AnnotatingGerman,Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
   \item We evaluate three prediction problems \textbf{separately}: register prediction, toxicity prediction, and VAD prediction, using task-appropriate datasets and metrics.
-  \item We additionally use Longman Grammar for initial linguistic validation of extracted TAMV patterns (not as a prediction dataset). \citep{Biber20101999LongmanEnglish}
+  \item We ground our hypothesis in Longman Grammar's documentation of register-conditioned TAMV variation, and derive validation test cases from its examples to evaluate extraction accuracy (Longman is not used as a prediction dataset). \citep{Biber20101999LongmanEnglish}
 \end{itemize}
 \end{abstract}
 
@@ -48,7 +48,7 @@
       \item spaCy-only UD-style TAMV extraction with intrinsic evaluation. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
       \item Register prediction on Brown using extracted TAMV distributions. \citep{19684/682R15.00.}
       \item Task-separable experimental design: distinct models/labels/metrics for register vs toxicity vs VAD.
-      \item Linguistic validation of extracted TAMV patterns against Longman Grammar expectations. \citep{Biber20101999LongmanEnglish}
+      \item Intrinsic validation using test cases derived from Longman Grammar examples. \citep{Biber20101999LongmanEnglish}
     \end{itemize}
 \end{itemize}
 
@@ -91,7 +91,7 @@
 \section{Data}
 \begin{itemize}
   \item \textbf{Register prediction:} Brown corpus (genre/register labels). \citep{19684/682R15.00.}
-  \item \textbf{TAMV intrinsic evaluation:} Gold TAMV annotation set (clauses/verbal complexes). \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+  \item \textbf{TAMV intrinsic evaluation:} Test cases derived from Longman Grammar examples, providing gold TAMV annotations for verbal complexes. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
   \item \textbf{Toxicity prediction:} (To add) dataset used in the slides once its BibTeX key is available.
   \item \textbf{VAD prediction:} (To add) dataset/label source once its BibTeX key is available.
 \end{itemize}
@@ -121,13 +121,13 @@
 \section{Experiments}
 \subsection{Intrinsic evaluation: TAMV extraction reliability}
 \begin{itemize}
-  \item Evaluate extracted TAMV against gold annotations: per-dimension accuracy/F1 and joint-label accuracy; error taxonomy. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+  \item Evaluate extracted TAMV against gold annotations derived from Longman Grammar examples: per-dimension accuracy/F1 and joint-label accuracy; error taxonomy. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
 \end{itemize}
 
 \subsection{Register prediction (Brown)}
 \begin{itemize}
   \item Predict Brown genre/register from TAMV distributions; report accuracy/F1 and confusion patterns. \citep{19684/682R15.00.}
-  \item Validate learned TAMV-by-register trends against Longman Grammar expectations (validation only). \citep{Biber20101999LongmanEnglish}
+  \item Compare learned TAMV-by-register trends to patterns documented in Longman Grammar as a sanity check. \citep{Biber20101999LongmanEnglish}
 \end{itemize}
 
 \subsection{Toxicity prediction (separate)}
@@ -144,7 +144,7 @@
 
 \section{Results}
 \begin{itemize}
-  \item \textbf{TAMV reliability:} gold-set performance and major error sources. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+  \item \textbf{TAMV reliability:} performance on Longman-derived test cases and major error sources. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
   \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{19684/682R15.00.,Biber20101999LongmanEnglish}
   \item \textbf{Toxicity:} toxicity prediction results (add citations once bib keys exist).
   \item \textbf{VAD:} VAD prediction results (add citations once bib keys exist).
@@ -160,7 +160,7 @@
 \begin{itemize}
   \item Strengths: interpretable grammatical signal; portable extraction via spaCy/UD-style dependency structure. \citep{Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
   \item What differs across tasks: why TAMV helps register, and what additional signals may be needed for toxicity and VAD (without conflating the evaluations).
-  \item Role of Longman: linguistic validation reference, not a prediction dataset. \citep{Biber20101999LongmanEnglish}
+  \item Role of Longman Grammar: theoretical grounding for TAMV--register connection and source of validation test cases, not a prediction dataset. \citep{Biber20101999LongmanEnglish}
 \end{itemize}
 
 \section{Conclusion}
