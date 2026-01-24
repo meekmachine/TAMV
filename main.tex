@@ -1,0 +1,186 @@
+\documentclass[11pt]{article}
+
+\usepackage[review]{acl}
+
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+
+\title{Dependency-Based TAMV Extraction with spaCy/UD for Interpretable Prediction of Register, Toxicity, and VAD}
+
+\author{First Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  \texttt{email@domain} \\\And
+  Second Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  \texttt{email@domain} \\}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\begin{itemize}
+  \item We present a grammar-forward feature pipeline that extracts tense--aspect--mood--voice (TAMV) from dependency parses and uses these features for interpretable prediction tasks in discourse analysis.
+  \item \textbf{Second sentence (required):} We show that TAMV can be extracted reliably from dependency parses produced by a spaCy-based pipeline, and we argue that a modern Universal Dependencies (UD) representation is well-suited to robust large-scale extraction. \citep{Ramm2017AnnotatingGerman,Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
+  \item We evaluate three prediction problems \textbf{separately}: register prediction, toxicity prediction, and VAD prediction, using task-appropriate datasets and metrics.
+  \item We additionally use Longman Grammar for initial linguistic validation of extracted TAMV patterns (not as a prediction dataset). \citep{Biber20101999LongmanEnglish}
+\end{itemize}
+\end{abstract}
+
+\section{Introduction}
+\begin{itemize}
+  \item \textbf{Motivation:} Verb phrase choices encode temporal framing (tense/aspect), stance (mood/modality), and agency (voice); these grammatical choices vary systematically by register and interactional context. \citep{Biber20101999LongmanEnglish}
+  \item \textbf{Goal:} Build an interpretable TAMV extraction pipeline from dependency structure and test its usefulness in three downstream prediction settings \emph{evaluated independently}.
+  \item \textbf{Claims:}
+    \begin{itemize}
+      \item (C1) TAMV can be extracted reliably from \textbf{spaCy} dependency parses under a UD-style representation. \citep{Ramm2017AnnotatingGerman,Nivre2010DependencyParsing}
+      \item (C2) Extracted TAMV distributions can predict \textbf{register} on Brown. \citep{19684/682R15.00.}
+      \item (C3) The same extracted representation supports \textbf{separate} prediction of toxicity and VAD when paired with task-appropriate supervision (dataset citations to be added once present in \texttt{custom.bib}). 
+    \end{itemize}
+  \item \textbf{Contributions:}
+    \begin{itemize}
+      \item spaCy-only UD-style TAMV extraction with intrinsic evaluation. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+      \item Register prediction on Brown using extracted TAMV distributions. \citep{19684/682R15.00.}
+      \item Task-separable experimental design: distinct models/labels/metrics for register vs toxicity vs VAD.
+      \item Linguistic validation of extracted TAMV patterns against Longman Grammar expectations. \citep{Biber20101999LongmanEnglish}
+    \end{itemize}
+\end{itemize}
+
+\section{Background}
+\subsection{Register and grammatical variation}
+\begin{itemize}
+  \item Register differences correspond to systematic frequency shifts in grammatical constructions; verb phrase systems are a major axis of variation. \citep{Biber20101999LongmanEnglish}
+\end{itemize}
+
+\subsection{Dependency parsing and UD vs.\ SD framing}
+\begin{itemize}
+  \item Dependency parsing provides relations required to detect verbal complexes, auxiliaries, passives, and clause structure. \citep{Nivre2010DependencyParsing}
+  \item We frame extraction in a \textbf{UD-style} representation (as used by modern pipelines) and argue it is a more current, standardized basis for scalable extraction than older SD-style conventions. \citep{Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
+\end{itemize}
+
+\subsection{Temporal structure and tense/aspect modeling assumptions}
+\begin{itemize}
+  \item Temporal structure annotation provides a foundation for operationalizing tense/aspect distinctions and clarifying ambiguous cases. \citep{Derczynski2012AnStructure}
+\end{itemize}
+
+\section{Related Work}
+\subsection{Linguistic evidence for TAMV and register}
+\begin{itemize}
+  \item Longman Grammar documents register-conditioned differences in verb phrase systems that motivate TAMV as a register-sensitive feature family. \citep{Biber20101999LongmanEnglish}
+\end{itemize}
+
+\subsection{Dependency-based TAMV/TMV extraction}
+\begin{itemize}
+  \item TMV-annotator motivates dependency-driven extraction of tense/mood/voice over verbal complexes. \citep{Ramm2017AnnotatingGerman}
+  \item Clause-level TMV/modality tagging for German motivates clause segmentation choices and highlights extraction difficulty cases. \citep{DonickeClause-LevelGerman}
+  \item spaCy-style pipelines are widely used for dependency-driven pattern extraction in applied NLP settings. \citep{Okhapkin2021ConstructingLibraries}
+\end{itemize}
+
+\subsection{Benchmarks for downstream prediction}
+\begin{itemize}
+  \item Brown provides a classic genre/register-labeled corpus suitable for testing whether extracted TAMV distributions predict register. \citep{19684/682R15.00.}
+  \item (To add) Toxicity and VAD benchmarks: insert once their BibTeX entries are in \texttt{custom.bib}.
+\end{itemize}
+
+\section{Data}
+\begin{itemize}
+  \item \textbf{Register prediction:} Brown corpus (genre/register labels). \citep{19684/682R15.00.}
+  \item \textbf{TAMV intrinsic evaluation:} Gold TAMV annotation set (clauses/verbal complexes). \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+  \item \textbf{Toxicity prediction:} (To add) dataset used in the slides once its BibTeX key is available.
+  \item \textbf{VAD prediction:} (To add) dataset/label source once its BibTeX key is available.
+\end{itemize}
+
+\section{Methods}
+\subsection{spaCy-only dependency parsing and preprocessing}
+\begin{itemize}
+  \item Parse with spaCy and extract POS/dependencies/lemmas/morph features needed for TAMV rules. \citep{Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
+  \item Implement UD-aligned rule patterns for verbal-complex identification and clause segmentation. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+\end{itemize}
+
+\subsection{TAMV extraction}
+\begin{itemize}
+  \item Tense: auxiliary/morph cues; Aspect: progressive/perfect auxiliary configurations.
+  \item Mood/modality: modal inventory and imperative heuristics.
+  \item Voice: passive patterns via auxiliary + participle + dependency roles.
+  \item Rule inventory grounded in prior TMV/TAMV dependency tagging work. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+\end{itemize}
+
+\subsection{Task-specific feature sets (kept separate)}
+\begin{itemize}
+  \item \textbf{Register task features:} TAMV distributions (counts/normalized rates) over documents/segments.
+  \item \textbf{Toxicity task features:} TAMV distributions and/or TAMV trajectories over turns (if conversational); evaluated only on toxicity labels.
+  \item \textbf{VAD task features:} TAMV + lexical features used to predict continuous VAD labels (or binned labels), evaluated only on VAD supervision.
+\end{itemize}
+
+\section{Experiments}
+\subsection{Intrinsic evaluation: TAMV extraction reliability}
+\begin{itemize}
+  \item Evaluate extracted TAMV against gold annotations: per-dimension accuracy/F1 and joint-label accuracy; error taxonomy. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+\end{itemize}
+
+\subsection{Register prediction (Brown)}
+\begin{itemize}
+  \item Predict Brown genre/register from TAMV distributions; report accuracy/F1 and confusion patterns. \citep{19684/682R15.00.}
+  \item Validate learned TAMV-by-register trends against Longman Grammar expectations (validation only). \citep{Biber20101999LongmanEnglish}
+\end{itemize}
+
+\subsection{Toxicity prediction (separate)}
+\begin{itemize}
+  \item Train a toxicity classifier using TAMV-based features; report AUC/F1 (dataset citations to be added).
+  \item If conversational: include trajectory features (early vs late windows), but evaluate only against toxicity labels.
+\end{itemize}
+
+\subsection{VAD prediction (separate)}
+\begin{itemize}
+  \item Predict VAD labels (continuous regression or binned classification), evaluated only against VAD supervision (dataset/lexicon citations to be added).
+  \item Report correlation/RMSE (regression) or accuracy/F1 (classification), depending on labeling scheme.
+\end{itemize}
+
+\section{Results}
+\begin{itemize}
+  \item \textbf{TAMV reliability:} gold-set performance and major error sources. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+  \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{19684/682R15.00.,Biber20101999LongmanEnglish}
+  \item \textbf{Toxicity:} toxicity prediction results (add citations once bib keys exist).
+  \item \textbf{VAD:} VAD prediction results (add citations once bib keys exist).
+\end{itemize}
+
+\section{Analysis}
+\begin{itemize}
+  \item Interpretability: which TAMV dimensions drive register prediction vs toxicity vs VAD (analyzed separately).
+  \item Error analysis: how dependency parsing/clause segmentation affects each TAMV dimension; connect to temporal structure assumptions. \citep{Derczynski2012AnStructure,Nivre2010DependencyParsing}
+\end{itemize}
+
+\section{Discussion}
+\begin{itemize}
+  \item Strengths: interpretable grammatical signal; portable extraction via spaCy/UD-style dependency structure. \citep{Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
+  \item What differs across tasks: why TAMV helps register, and what additional signals may be needed for toxicity and VAD (without conflating the evaluations).
+  \item Role of Longman: linguistic validation reference, not a prediction dataset. \citep{Biber20101999LongmanEnglish}
+\end{itemize}
+
+\section{Conclusion}
+\begin{itemize}
+  \item We present a spaCy-only UD-style TAMV extraction pipeline with intrinsic validation and show that extracted TAMV distributions predict register on Brown.
+  \item We evaluate toxicity and VAD as separate supervised tasks using the same extraction backbone (final citations added once their BibTeX entries are included).
+\end{itemize}
+
+\section*{Limitations}
+\begin{itemize}
+  \item Dependency parsing and clause segmentation errors can propagate into TAMV labeling. \citep{Nivre2010DependencyParsing}
+  \item TAMV scope limitations (modal ambiguity, passive/participle ambiguity, non-finite handling) remain open. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+  \item Toxicity/VAD sections require adding the dataset and lexicon BibTeX entries currently missing from the pasted snippet.
+\end{itemize}
+
+\section*{Acknowledgments}
+\begin{itemize}
+  \item (To fill) Lab, advisor(s), funding, dataset/tool authors, and reviewers.
+\end{itemize}
+
+\bibliography{references}
+
+\end{document}
