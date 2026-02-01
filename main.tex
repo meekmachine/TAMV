@@ -26,8 +26,8 @@
 
 \begin{abstract}
 \begin{itemize}
-  \item We present a grammar-forward feature pipeline that extracts tense--aspect--mood--voice (TAMV) from dependency parses and uses these features for interpretable prediction tasks in discourse analysis.
-  \item \textbf{Second sentence (required):} We show that TAMV can be extracted reliably from dependency parses produced by a spaCy-based pipeline, and we argue that a modern Universal Dependencies (UD) representation is well-suited to robust large-scale extraction. \citep{Ramm2017AnnotatingGerman,Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
+  \item We present a feature-extraction process for extracting tense--aspect--mood--voice (TAMV) from dependency-parsed texts and uses these features for interpretable prediction tasks in discourse analysis.
+  \item We show that TAMV can be reliably inferred from dependency parses produced by a spaCy-based pipeline. And, additionally, that a modern Universal Dependencies (UD) representation is well-suited to robust large-scale extraction. \citep{Ramm2017AnnotatingGerman,Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
   \item We evaluate three prediction problems \textbf{separately}: register prediction, toxicity prediction, and VAD prediction, using task-appropriate datasets and metrics.
   \item We ground our hypothesis in Longman Grammar's documentation of register-conditioned TAMV variation, and derive validation test cases from its examples to evaluate extraction accuracy (Longman is not used as a prediction dataset). \citep{Biber20101999LongmanEnglish}
 \end{itemize}
@@ -45,7 +45,7 @@
     \end{itemize}
   \item \textbf{Contributions:}
     \begin{itemize}
-      \item spaCy-only UD-style TAMV extraction with intrinsic evaluation. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+      \item spaCy-only Universal Dependency (UD) TAMV extraction with intrinsic evaluation. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
       \item Register prediction on Brown using extracted TAMV distributions. \citep{19684/682R15.00.}
       \item Task-separable experimental design: distinct models/labels/metrics for register vs toxicity vs VAD.
       \item Intrinsic validation using test cases derived from Longman Grammar examples. \citep{Biber20101999LongmanEnglish}
@@ -66,7 +66,7 @@
 
 \subsection{Temporal structure and tense/aspect modeling assumptions}
 \begin{itemize}
-  \item Temporal structure annotation provides a foundation for operationalizing tense/aspect distinctions and clarifying ambiguous cases. \citep{Derczynski2012AnStructure}
+  \item Temporal structure annotation provides a foundation for disambiguating tense/aspect distinctions and clarifying ambiguous cases. \citep{Derczynski2012AnStructure}
 \end{itemize}
 
 \section{Related Work}
