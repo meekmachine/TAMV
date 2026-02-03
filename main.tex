@@ -15,7 +15,7 @@
 \author{Jonathan Sutton Fields \\
   Florida International University \\
   11200 SW 8th Street, Miami, FL 33199 \\
-  \texttt{jfiel067@fiu.edu} \\\And
+  \texttt{jfiel029@fiu.edu} \\\And
   Dr. Samira Zad \\
   Florida International University \\
   11200 SW 8th Street, Miami, FL 33199 \\
@@ -55,12 +55,40 @@
 \section{Background}
 \subsection{Register and grammatical variation}
 \begin{itemize}
+  % TODO: First explain about what register actually is and the different varieties of spoken and written English
+  \item \textbf{What is register?} Register refers to systematic linguistic variation conditioned by situational context---including mode (spoken vs.\ written), interactivity, production circumstances, and communicative purpose. \citep{Biber20101999LongmanEnglish}
+  \item \textbf{Major varieties:} Longman Grammar distinguishes four core registers: \emph{conversation} (informal, interactive, real-time), \emph{fiction} (narrative, edited, monologic), \emph{news} (informational, edited, public), and \emph{academic} (expository, highly edited, specialized). \citep{Biber20101999LongmanEnglish}
   \item Register differences correspond to systematic frequency shifts in grammatical constructions; verb phrase systems are a major axis of variation. \citep{Biber20101999LongmanEnglish}
+  % TODO: lets find more findings from Longman Grammar to substantiate each category.
+  \item \textbf{Tense/Aspect:} Present tense dominates conversation; past tense dominates fiction and news. Perfect aspect is most frequent in news and academic writing. \citep{Biber20101999LongmanEnglish}
+    \begin{itemize}
+      \item Conversation: \emph{``I think he knows what he's doing.''}
+      \item Fiction: \emph{``She walked into the room and saw him standing there.''}
+      \item News: \emph{``The committee has voted to approve the measure.''}
+    \end{itemize}
+  \item \textbf{Mood/Modality:} Modal verbs are frequent in conversation (expressing stance, politeness, hedging); academic prose favors epistemic modals (\emph{may}, \emph{might}, \emph{could}) for hedged claims. \citep{Biber20101999LongmanEnglish}
+    \begin{itemize}
+      \item Conversation: \emph{``You should try this---it might be good.''}
+      \item Academic: \emph{``These results may indicate a relationship between the variables.''}
+    \end{itemize}
+  \item \textbf{Voice:} Passive voice is rare in conversation but common in academic and news registers, where agent de-emphasis and information packaging motivate its use. \citep{Biber20101999LongmanEnglish}
+    \begin{itemize}
+      \item Conversation: \emph{``They fired him last week.''} (active preferred)
+      \item Academic: \emph{``The samples were analyzed using spectroscopy.''} (passive preferred)
+      \item News: \emph{``Three people were killed in the accident.''} (passive preferred)
+    \end{itemize}
 \end{itemize}
 
 \subsection{Dependency parsing and UD vs.\ SD framing}
 \begin{itemize}
   \item Dependency parsing provides relations required to detect verbal complexes, auxiliaries, passives, and clause structure. \citep{Nivre2010DependencyParsing}
+  \item \textbf{Theoretical foundations:} These two parsing conventions reflect different grammatical traditions:
+    \begin{itemize}
+      \item \textbf{SD} derives from Chomskyan phrase structure grammar (Government \& Binding Theory), where the finite element carrying tense/agreement features governs the clause.
+      \item \textbf{UD} derives from Tesni\`{e}re's Dependency Grammar (1959)---predating Chomsky---which argues the lexical/content word should be the syntactic head, with function words as dependents.
+    \end{itemize}
+  \item \textbf{SD (Stanford Dependencies):} Convention where the finite auxiliary is the syntactic head of the clause (e.g., \emph{has} heads \emph{has eaten}). Used by Mate parser and TMV-annotator. \citep{Ramm2017AnnotatingGerman}
+  \item \textbf{UD (Universal Dependencies):} Convention where the \emph{content verb} is the head and auxiliaries attach as dependents (e.g., \emph{eaten} heads \emph{has eaten}). Used by spaCy and most current NLP pipelines. \citep{Nivre2010DependencyParsing}
   \item We frame extraction in a \textbf{UD-style} representation (as used by modern pipelines) and argue it is a more current, standardized basis for scalable extraction than older SD-style conventions. \citep{Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
 \end{itemize}
 
@@ -77,9 +105,10 @@
 
 \subsection{Dependency-based TAMV/TMV extraction}
 \begin{itemize}
-  \item TMV-annotator motivates dependency-driven extraction of tense/mood/voice over verbal complexes. \citep{Ramm2017AnnotatingGerman}
+  \item \textbf{Ramm et al.\ (2017):} The TMV-annotator extracts tense, mood, and voice from verbal complexes using rule-based patterns over dependency parses. Their system uses the \textbf{Mate parser}, which follows the older Stanford Dependencies (SD) convention where auxiliaries head verbal complexes. \citep{Ramm2017AnnotatingGerman}
+  \item \textbf{spaCy:} A widely-used open-source NLP library that provides fast, accurate dependency parsing using neural models trained on Universal Dependencies (UD) treebanks. Unlike Mate, spaCy treats the \emph{content verb} as the head, with auxiliaries as dependents. \citep{Okhapkin2021ConstructingLibraries}
+  \item \textbf{Mate vs.\ spaCy:} Mate parser (SD-style) is accurate but requires Java and pre-trained models that are less actively maintained. spaCy (UD-style) is Python-native, faster, and better supported for modern NLP pipelines. Our work adapts Ramm et al.'s extraction logic to spaCy's UD representation.
   \item Clause-level TMV/modality tagging for German motivates clause segmentation choices and highlights extraction difficulty cases. \citep{DonickeClause-LevelGerman}
-  \item spaCy-style pipelines are widely used for dependency-driven pattern extraction in applied NLP settings. \citep{Okhapkin2021ConstructingLibraries}
 \end{itemize}
 
 \subsection{Benchmarks for downstream prediction}
@@ -105,9 +134,10 @@
 
 \subsection{TAMV extraction}
 \begin{itemize}
-  \item Tense: auxiliary/morph cues; Aspect: progressive/perfect auxiliary configurations.
-  \item Mood/modality: modal inventory and imperative heuristics.
-  \item Voice: passive patterns via auxiliary + participle + dependency roles.
+  \item \textbf{Tense:} Determined by auxiliary presence and verb morphology---\emph{will/shall} signal future; \emph{-ed} or irregular past forms signal past; base/\emph{-s} forms signal present. \citep{Biber20101999LongmanEnglish}
+  \item \textbf{Aspect:} Progressive detected via \emph{be} + \emph{-ing}; perfect detected via \emph{have} + past participle; combinations yield perfect-progressive. \citep{Biber20101999LongmanEnglish}
+  \item \textbf{Mood/Modality:} Modal verbs (\emph{can}, \emph{could}, \emph{may}, \emph{might}, \emph{must}, \emph{shall}, \emph{should}, \emph{will}, \emph{would}) detected by POS tag and lemma; imperative detected by base form without subject; subjunctive detected in \emph{that}-clause complements of mandate verbs. \citep{Biber20101999LongmanEnglish}
+  \item \textbf{Voice:} Passive detected via \emph{be} + past participle where the subject is the logical patient (dependency role \texttt{nsubjpass} or \texttt{nsubj:pass}). \citep{Ramm2017AnnotatingGerman}
   \item Rule inventory grounded in prior TMV/TAMV dependency tagging work. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
 \end{itemize}
 
