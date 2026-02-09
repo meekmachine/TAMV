@@ -40,13 +40,13 @@
   \item \textbf{Claims:}
     \begin{itemize}
       \item (C1) TAMV can be extracted reliably from \textbf{spaCy} dependency parses under a UD-style representation. \citep{Ramm2017AnnotatingGerman,Nivre2010DependencyParsing}
-      \item (C2) Extracted TAMV distributions can predict \textbf{register} on Brown. \citep{19684/682R15.00.}
+      \item (C2) Extracted TAMV distributions can predict \textbf{register} on Brown. \citep{Kucera1968BrownCorpus}
       \item (C3) The same extracted representation supports \textbf{separate} prediction of toxicity and VAD when paired with task-appropriate supervision (dataset citations to be added once present in \texttt{custom.bib}). 
     \end{itemize}
   \item \textbf{Contributions:}
     \begin{itemize}
       \item spaCy-only Universal Dependency (UD) TAMV extraction with intrinsic evaluation. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
-      \item Register prediction on Brown using extracted TAMV distributions. \citep{19684/682R15.00.}
+      \item Register prediction on Brown using extracted TAMV distributions. \citep{Kucera1968BrownCorpus}
       \item Task-separable experimental design: distinct models/labels/metrics for register vs toxicity vs VAD.
       \item Intrinsic validation using test cases derived from Longman Grammar examples. \citep{Biber20101999LongmanEnglish}
     \end{itemize}
@@ -119,13 +119,13 @@
 
 \subsection{Benchmarks for downstream prediction}
 \begin{itemize}
-  \item Brown provides a classic genre/register-labeled corpus suitable for testing whether extracted TAMV distributions predict register. \citep{19684/682R15.00.}
+  \item Brown provides a classic genre/register-labeled corpus suitable for testing whether extracted TAMV distributions predict register. \citep{Kucera1968BrownCorpus}
   \item (To add) Toxicity and VAD benchmarks: insert once their BibTeX entries are in \texttt{custom.bib}.
 \end{itemize}
 
 \section{Data}
 \begin{itemize}
-  \item \textbf{Register prediction:} Brown corpus (genre/register labels). \citep{19684/682R15.00.}
+  \item \textbf{Register prediction:} Brown corpus (genre/register labels). \citep{Kucera1968BrownCorpus}
   \item \textbf{TAMV intrinsic evaluation:} Test cases derived from Longman Grammar examples, providing gold TAMV annotations for verbal complexes. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
   \item \textbf{Toxicity prediction:} (To add) dataset used in the slides once its BibTeX key is available.
   \item \textbf{VAD prediction:} (To add) dataset/label source once its BibTeX key is available.
@@ -168,7 +168,7 @@
 
 \subsection{Register prediction (Brown)}
 \begin{itemize}
-  \item Predict Brown genre/register from TAMV distributions; report accuracy/F1 and confusion patterns. \citep{19684/682R15.00.}
+  \item Predict Brown genre/register from TAMV distributions; report accuracy/F1 and confusion patterns. \citep{Kucera1968BrownCorpus}
   \item Compare learned TAMV-by-register trends to patterns documented in Longman Grammar as a sanity check. \citep{Biber20101999LongmanEnglish}
 \end{itemize}
 
@@ -187,7 +187,7 @@
 \section{Results}
 \begin{itemize}
   \item \textbf{TAMV reliability:} performance on Longman-derived test cases and major error sources. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
-  \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{19684/682R15.00.,Biber20101999LongmanEnglish}
+  \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{Kucera1968BrownCorpus,Biber20101999LongmanEnglish}
   \item \textbf{Toxicity:} toxicity prediction results (add citations once bib keys exist).
   \item \textbf{VAD:} VAD prediction results (add citations once bib keys exist).
 \end{itemize}
@@ -223,6 +223,7 @@
   \item (To fill) Lab, advisor(s), funding, dataset/tool authors, and reviewers.
 \end{itemize}
 
+\bibliographystyle{acl_natbib}
 \bibliography{references}
 
 \end{document}
