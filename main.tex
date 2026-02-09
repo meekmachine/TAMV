@@ -84,11 +84,17 @@
   \item Dependency parsing provides relations required to detect verbal complexes, auxiliaries, passives, and clause structure. \citep{Nivre2010DependencyParsing}
   \item \textbf{Theoretical foundations:} These two parsing conventions reflect different grammatical traditions:
     \begin{itemize}
-      \item \textbf{SD} derives from Chomskyan phrase structure grammar (Government \& Binding Theory), where the finite element carrying tense/agreement features governs the clause.
-      \item \textbf{UD} derives from Tesni\`{e}re's Dependency Grammar (1959)---predating Chomsky---which argues the lexical/content word should be the syntactic head, with function words as dependents.
+      \item \textbf{SD} derives from Chomskyan phrase structure grammar (Government \& Binding Theory), where the finite element carrying tense/agreement features governs the clause. \citep{Chomsky1988LecturesLectures}
+      \item \textbf{UD} derives from Tesni\`{e}re's Dependency Grammar (1959)---predating Chomsky---which argues the lexical/content word should be the syntactic head, with function words as dependents. \citep{Tesniere2015ElementsSyntax}
     \end{itemize}
-  \item \textbf{SD (Stanford Dependencies):} Convention where the finite auxiliary is the syntactic head of the clause (e.g., \emph{has} heads \emph{has eaten}). Used by Mate parser and TMV-annotator. \citep{Ramm2017AnnotatingGerman}
-  \item \textbf{UD (Universal Dependencies):} Convention where the \emph{content verb} is the head and auxiliaries attach as dependents (e.g., \emph{eaten} heads \emph{has eaten}). Used by spaCy and most current NLP pipelines. \citep{Nivre2010DependencyParsing}
+  \item \textbf{SD (Stanford Dependencies):} Convention where the finite auxiliary is the syntactic head of the clause (e.g., \emph{has} heads \emph{has eaten}). Used by Mate parser and TMV-annotator. \citep{DeMarneffeGeneratingParses,Ramm2017AnnotatingGerman}
+  \item \textbf{UD (Universal Dependencies):} Convention where the \emph{content verb} is the head and auxiliaries attach as dependents (e.g., \emph{eaten} heads \emph{has eaten}). Used by spaCy and most current NLP pipelines. \citep{Nivre2020UniversalCollection,deMarneffeUniversalTypology}
+  \item \textbf{Parser architectures:} Beyond annotation conventions, the parsers themselves differ architecturally:
+    \begin{itemize}
+      \item \textbf{Graph-based parsing} (Mate): Scores all possible dependency edges simultaneously and finds the optimal tree via maximum spanning tree algorithms. Considers global structure before committing to any decision. \citep{Nivre2010DependencyParsing}
+      \item \textbf{Transition-based parsing} (spaCy): Builds the parse incrementally through a sequence of shift/reduce actions. Traditionally, such parsers are \emph{monotonic}---once a decision is made, it cannot be undone. However, spaCy employs a \emph{non-monotonic} transition system that allows the parser to ``repair'' earlier mistakes, escaping garden-path errors that trap monotonic parsers. \citep{Vasiliev2020NaturalIntroduction}
+    \end{itemize}
+  \item \textbf{Modern treebanks:} The Universal Dependencies project now comprises over 200 treebanks across 100+ languages, providing consistent cross-linguistic annotations that enable multilingual NLP and facilitate comparison across parsing frameworks. \citep{Nivre2020UniversalCollection}
   \item We frame extraction in a \textbf{UD-style} representation (as used by modern pipelines) and argue it is a more current, standardized basis for scalable extraction than older SD-style conventions. \citep{Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
 \end{itemize}
 
@@ -128,8 +134,14 @@
 \section{Methods}
 \subsection{spaCy-only dependency parsing and preprocessing}
 \begin{itemize}
-  \item Parse with spaCy and extract POS/dependencies/lemmas/morph features needed for TAMV rules. \citep{Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
+  \item Parse with spaCy and extract POS/dependencies/lemmas/morph features needed for TAMV rules. \citep{Vasiliev2020NaturalIntroduction,Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
   \item Implement UD-aligned rule patterns for verbal-complex identification and clause segmentation. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+  \item \textbf{Data format---CoNLL-U vs.\ CoNLL-2012:} Our pipeline uses the \textbf{CoNLL-U} format, the standard 10-column tab-separated format for Universal Dependencies treebanks. \citep{Nivre2020UniversalCollection} This differs from the \textbf{CoNLL-2012} format used by Ramm et al., which follows the OntoNotes-style shared task schema with different column structure and coreference annotations. Key differences:
+    \begin{itemize}
+      \item CoNLL-U provides explicit morphological features (FEATS column) and enhanced dependencies, facilitating TAMV extraction
+      \item CoNLL-2012 includes semantic role labels and coreference chains, which are not directly used for TAMV
+      \item Dependency relation labels differ slightly between the two conventions (e.g., \texttt{aux} vs.\ \texttt{AUX})
+    \end{itemize}
 \end{itemize}
 
 \subsection{TAMV extraction}
