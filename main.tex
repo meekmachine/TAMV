@@ -160,6 +160,21 @@
   \item \textbf{VAD task features:} TAMV + lexical features used to predict continuous VAD labels (or binned labels), evaluated only on VAD supervision.
 \end{itemize}
 
+\subsection{Evaluation methodology}
+\begin{itemize}
+  \item \textbf{Metrics:} We report accuracy, precision, recall, and F1-score (macro-averaged) for classification tasks. For TAMV extraction, we additionally report per-dimension accuracy (tense, aspect, mood, voice separately) and joint-label exact match.
+  \item \textbf{Data splits:} Each task uses an 80/20 train/test split with stratified sampling to preserve label distributions. For intrinsic TAMV evaluation, we use held-out test cases not seen during rule development.
+  \item \textbf{Cross-validation:} Where dataset size permits, we perform 5-fold cross-validation and report mean and standard deviation of metrics.
+  \item \textbf{Baselines:}
+    \begin{itemize}
+      \item \emph{Intrinsic:} Comparison against TMV-annotator output on Europarl sentences parsed by both Mate (SD) and spaCy (UD).
+      \item \emph{Register:} Majority-class baseline and bag-of-words logistic regression.
+      \item \emph{Toxicity:} Majority-class baseline and lexicon-based approaches.
+      \item \emph{VAD:} Mean-value baseline and lexicon-only regression.
+    \end{itemize}
+  \item \textbf{Statistical significance:} We use paired bootstrap resampling (n=10,000) to compute 95\% confidence intervals and assess significance of differences between models.
+\end{itemize}
+
 \section{Experiments}
 \subsection{Intrinsic evaluation: TAMV extraction reliability}
 \begin{itemize}
