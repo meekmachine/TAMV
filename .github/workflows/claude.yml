@@ -75,11 +75,12 @@ jobs:
 
             Instructions:
             1. Read the relevant files to understand the current state
-            2. Make the necessary code changes using the Edit tool
-            3. After making changes, commit them with: git add -A && git commit -m "Fix #${{ github.event.issue.number }}: <description>"
-            4. Push to a new branch: git checkout -b issue-${{ github.event.issue.number }} && git push -u origin issue-${{ github.event.issue.number }}
-            5. Create a PR using: gh pr create --title "Fix #${{ github.event.issue.number }}: <title>" --body "Closes #${{ github.event.issue.number }}"
-          claude_args: "--max-turns 15 --allowedTools Edit,Read,Bash,Glob,Grep,Write"
+            2. For external GitHub repos, use `gh repo clone` or `gh api` commands (not WebFetch)
+            3. Make the necessary code changes using the Edit tool
+            4. After making changes, commit them with: git add -A && git commit -m "Fix #${{ github.event.issue.number }}: <description>"
+            5. Push to a new branch: git checkout -b issue-${{ github.event.issue.number }} && git push -u origin issue-${{ github.event.issue.number }}
+            6. Create a PR using: gh pr create --title "Fix #${{ github.event.issue.number }}: <title>" --body "Closes #${{ github.event.issue.number }}"
+          claude_args: "--max-turns 25 --allowedTools Edit,Read,Bash,Glob,Grep,Write,WebFetch"
 
   # Auto-review PRs
   review-pr:
