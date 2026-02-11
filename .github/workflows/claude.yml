@@ -1,0 +1,88 @@
+name: Claude Code
+
+on:
+  # Respond to @claude mentions in issues/PRs
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+  # Auto-implement issues (on create or label)
+  issues:
+    types: [opened, labeled]
+
+  # Auto-review PRs
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  # Respond to @claude mentions
+  claude-mention:
+    if: |
+      (github.event_name == 'issue_comment' || github.event_name == 'pull_request_review_comment') &&
+      contains(github.event.comment.body, '@claude')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          trigger_phrase: "@claude"
+
+  # Auto-implement issues with 'implement' label
+  implement-issue:
+    if: |
+      github.event_name == 'issues' &&
+      contains(github.event.issue.labels.*.name, 'implement')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Implement the changes described in this issue and create a pull request.
+
+            Issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}
+
+            ${{ github.event.issue.body }}
+
+            Instructions:
+            1. Create a new branch named 'issue-${{ github.event.issue.number }}'
+            2. Make the necessary code changes
+            3. Commit with a descriptive message
+            4. Push and create a PR linking to this issue with "Closes #${{ github.event.issue.number }}"
+          claude_args: "--max-turns 10"
+
+  # Auto-review PRs
+  review-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Review this pull request and provide feedback.
+
+            PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}
+
+            ${{ github.event.pull_request.body }}
+
+            Instructions:
+            1. Review the code changes for correctness, style, and potential issues
+            2. Check for any security concerns
+            3. Verify the changes match the PR description
+            4. Post a review comment with your findings
+            5. Approve if everything looks good, or request changes if needed
+          claude_args: "--max-turns 5"
