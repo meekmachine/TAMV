@@ -154,11 +154,7 @@ jobs:
 
   # Respond to regular PR comments (not line-level)
   respond-to-pr-comment:
-    if: |
-      github.event_name == 'issue_comment' &&
-      github.event.issue.pull_request &&
-      !contains(github.event.comment.body, '@claude') &&
-      github.event.comment.user.login != 'github-actions[bot]'
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request != null
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
