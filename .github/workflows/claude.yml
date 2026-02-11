@@ -107,3 +107,43 @@ jobs:
             3. Verify the changes match the PR description
             4. Post a review comment summarizing your findings
           claude_args: "--max-turns 5"
+
+  # Respond to PR review comments (feedback on Claude's PRs)
+  respond-to-pr-feedback:
+    if: |
+      github.event_name == 'pull_request_review_comment' &&
+      !contains(github.event.comment.body, '@claude')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            A reviewer left feedback on this pull request. Address their comment.
+
+            PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}
+
+            Review comment from @${{ github.event.comment.user.login }}:
+            File: ${{ github.event.comment.path }}
+            Line: ${{ github.event.comment.line }}
+            Comment: ${{ github.event.comment.body }}
+
+            Instructions:
+            1. Understand the reviewer's feedback
+            2. If code changes are needed, make them using the Edit tool
+            3. Commit and push fixes: git add -A && git commit -m "Address review feedback" && git push
+            4. Reply to the comment explaining what you changed (use gh pr comment)
+            5. If the feedback is just a question or doesn't require changes, reply with an explanation
+          claude_args: "--max-turns 10 --allowedTools Edit,Read,Bash,Glob,Grep,Write"
