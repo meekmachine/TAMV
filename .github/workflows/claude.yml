@@ -63,24 +63,26 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - uses: anthropics/claude-code-action@v1
+        continue-on-error: true  # Don't fail workflow if max turns reached
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          show_full_output: true  # For debugging
           prompt: |
-            Implement the changes described in this issue.
+            Implement the changes described in this issue. Work efficiently and create a PR when done.
 
             Issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}
 
             ${{ github.event.issue.body }}
 
             Instructions:
-            1. Read the relevant files to understand the current state
-            2. For external GitHub repos, use `gh repo clone` or `gh api` commands (not WebFetch)
-            3. Make the necessary code changes using the Edit tool
-            4. After making changes, commit them with: git add -A && git commit -m "Fix #${{ github.event.issue.number }}: <description>"
-            5. Push to a new branch: git checkout -b issue-${{ github.event.issue.number }} && git push -u origin issue-${{ github.event.issue.number }}
-            6. Create a PR using: gh pr create --title "Fix #${{ github.event.issue.number }}: <title>" --body "Closes #${{ github.event.issue.number }}"
-          claude_args: "--max-turns 25 --allowedTools Edit,Read,Bash,Glob,Grep,Write,WebFetch"
+            1. Read relevant files quickly to understand the current state
+            2. For external GitHub repos, use `gh repo clone` or `gh api` (not WebFetch)
+            3. Make code changes using Edit tool
+            4. When done: git add -A && git commit -m "Fix #${{ github.event.issue.number }}: <description>"
+            5. Create branch and push: git checkout -b issue-${{ github.event.issue.number }} && git push -u origin issue-${{ github.event.issue.number }}
+            6. Create PR: gh pr create --title "Fix #${{ github.event.issue.number }}: <title>" --body "Closes #${{ github.event.issue.number }}"
+          claude_args: "--max-turns 40 --allowedTools Edit,Read,Bash,Glob,Grep,Write,WebFetch"
 
   # Auto-review PRs
   review-pr:
