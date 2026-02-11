@@ -1,5 +1,11 @@
 name: Claude Code
 
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
 on:
   # Respond to @claude mentions in issues/PRs
   issue_comment:
