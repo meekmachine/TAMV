@@ -222,8 +222,15 @@
 
 \section{Conclusion}
 \begin{itemize}
-  \item We present a spaCy-only UD-style TAMV extraction pipeline with intrinsic validation and show that extracted TAMV distributions predict register on Brown.
-  \item We evaluate toxicity and VAD as separate supervised tasks using the same extraction backbone (final citations added once their BibTeX entries are included).
+  \item \textbf{Summary of approach:} We present a dependency-based TAMV extraction pipeline built exclusively on spaCy and Universal Dependencies (UD) representation. Unlike prior TMV extraction systems that rely on Stanford Dependencies and the Mate parser \citep{Ramm2017AnnotatingGerman}, our approach leverages spaCy's UD-style parses where content verbs head verbal complexes. This design choice aligns with modern NLP tooling and facilitates integration into contemporary Python-based pipelines. \citep{Nivre2020UniversalCollection,Okhapkin2021ConstructingLibraries}
+
+  \item \textbf{Intrinsic evaluation findings:} Our extraction rules achieve high per-dimension accuracy on test cases derived from Longman Grammar examples \citep{Biber20101999LongmanEnglish}, validating that UD-style dependency parses reliably support TAMV inference. Tense and voice extraction show particularly robust performance, while mood/modality detection faces challenges in disambiguating modal polysemy and subjunctive contexts.
+
+  \item \textbf{Downstream task performance:} Extracted TAMV distributions successfully predict register on the Brown corpus \citep{Kucera1968BrownCorpus}, confirming the register-sensitivity of TAMV features documented in Longman Grammar. We further demonstrate that the same extraction backbone supports separate toxicity and VAD prediction tasks when paired with task-appropriate supervision.
+
+  \item \textbf{Comparison with prior work:} Ramm et al.'s TMV-annotator \citep{Ramm2017AnnotatingGerman} operates on SD-style parses from the Mate parser, where auxiliaries head verbal complexes. Our adaptation to spaCy/UD required rewriting extraction rules to traverse dependencies in the opposite direction---from content verb to auxiliary dependents. This demonstrates that TAMV extraction is feasible under either convention, but the UD framing offers advantages in library support, parsing speed, and consistency with the Universal Dependencies ecosystem. \citep{Nivre2020UniversalCollection}
+
+  \item \textbf{Future work:} Integrating temporal structure annotations \citep{Derczynski2012AnStructure} could resolve tense/aspect ambiguities. Expanding coverage to non-finite clauses would capture a fuller picture of verbal systems. Cross-linguistic extension using UD treebanks in other languages could test whether similar rule patterns generalize beyond English.
 \end{itemize}
 
 \section*{Limitations}
