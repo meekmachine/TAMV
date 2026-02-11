@@ -178,7 +178,24 @@
 \section{Experiments}
 \subsection{Intrinsic evaluation: TAMV extraction reliability}
 \begin{itemize}
-  \item Evaluate extracted TAMV against gold annotations derived from Longman Grammar examples: per-dimension accuracy/F1 and joint-label accuracy; error taxonomy. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
+  \item \textbf{Evaluation methodology:} We assess TAMV extraction accuracy by comparing system output against gold annotations derived from Longman Grammar examples. \citep{Biber20101999LongmanEnglish} We report both per-dimension metrics (tense, aspect, mood, voice evaluated separately) and joint-label exact match to capture whether the complete TAMV tuple is correctly extracted. This mirrors the evaluation approach used by Ramm et al.\ for their TMV-annotator. \citep{Ramm2017AnnotatingGerman}
+
+  \item \textbf{Test case construction approach:} Gold TAMV annotations are constructed in two stages:
+    \begin{itemize}
+      \item \emph{Stage 1---Example selection:} We manually extract verbal complexes from Longman Grammar's illustrative examples across all four registers (conversation, fiction, news, academic). These examples are canonical instances chosen by corpus linguists to demonstrate register-specific TAMV patterns. \citep{Biber20101999LongmanEnglish}
+      \item \emph{Stage 2---Gold labeling:} Each verbal complex is manually annotated with its ground-truth TAMV values based on morphological and syntactic analysis. We follow the labeling conventions established by Ramm et al.\ \citep{Ramm2017AnnotatingGerman}, augmented with aspect distinctions (simple, progressive, perfect, perfect-progressive) not present in their TMV scheme.
+      \item \emph{Inter-annotator agreement:} A subset of 50 test cases is independently annotated by two linguists to compute Cohen's $\kappa$ for each TAMV dimension, ensuring reliable gold labels.
+    \end{itemize}
+
+  \item \textbf{Error taxonomy:} We categorize extraction errors into the following types to diagnose systematic failure modes:
+    \begin{itemize}
+      \item \emph{Parse errors:} Incorrect dependency structure from spaCy prevents correct auxiliary/main-verb identification.
+      \item \emph{Tense errors:} Misidentification of past/present/future, often due to modal-future confusion (\emph{will} vs.\ present) or irregular verb forms.
+      \item \emph{Aspect errors:} Confusion between progressive and perfect aspect markers, or failure to detect perfect-progressive combinations.
+      \item \emph{Mood errors:} Modal polysemy (e.g., \emph{would} as past habitual vs.\ conditional) or subjunctive detection failures in \emph{that}-clause complements.
+      \item \emph{Voice errors:} Passive/participle ambiguity (adjectival passives vs.\ verbal passives) or missing \texttt{nsubjpass} relation in UD parse.
+      \item \emph{Clause segmentation errors:} Incorrect boundaries for verbal complexes, leading to missing or spurious TAMV annotations.
+    \end{itemize}
 \end{itemize}
 
 \subsection{Register prediction (Brown)}
