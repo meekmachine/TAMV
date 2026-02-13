@@ -67,7 +67,8 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          show_full_output: true  # For debugging
+          max_turns: 40
+          allowed_tools: "Edit,Read,Bash,Glob,Grep,Write"
           prompt: |
             Implement the changes described in this issue. Work efficiently and create a PR when done.
 
@@ -77,12 +78,11 @@ jobs:
 
             Instructions:
             1. Read relevant files quickly to understand the current state
-            2. For external GitHub repos, use `gh repo clone` or `gh api` (not WebFetch)
+            2. For external GitHub repos, use `gh repo clone` or `gh api`
             3. Make code changes using Edit tool
             4. When done: git add -A && git commit -m "Fix #${{ github.event.issue.number }}: <description>"
             5. Create branch and push: git checkout -b issue-${{ github.event.issue.number }} && git push -u origin issue-${{ github.event.issue.number }}
             6. Create PR: gh pr create --title "Fix #${{ github.event.issue.number }}: <title>" --body "Closes #${{ github.event.issue.number }}"
-          claude_args: "--max-turns 40 --allowedTools Edit,Read,Bash,Glob,Grep,Write,WebFetch"
 
   # Auto-review PRs
   review-pr:
@@ -97,6 +97,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          max_turns: 5
           prompt: |
             Review this pull request and provide feedback.
 
@@ -109,7 +110,6 @@ jobs:
             2. Check for any security concerns
             3. Verify the changes match the PR description
             4. Post a review comment summarizing your findings
-          claude_args: "--max-turns 5"
 
   # Respond to line-level PR review comments
   respond-to-pr-review-comment:
@@ -135,7 +135,8 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          show_full_output: true
+          max_turns: 15
+          allowed_tools: "Edit,Read,Bash,Glob,Grep,Write"
           prompt: |
             A reviewer left a line comment on this PR. Address their feedback.
 
@@ -150,7 +151,6 @@ jobs:
             1. If code changes needed, make them with Edit tool
             2. Commit and push: git add -A && git commit -m "Address review: ${{ github.event.comment.path }}" && git push
             3. Reply using: gh pr comment ${{ github.event.pull_request.number }} --body "Done: <explanation>"
-          claude_args: "--max-turns 15 --allowedTools Edit,Read,Bash,Glob,Grep,Write"
 
   # Respond to regular PR comments (not line-level)
   respond-to-pr-comment:
@@ -183,7 +183,8 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          show_full_output: true
+          max_turns: 15
+          allowed_tools: "Edit,Read,Bash,Glob,Grep,Write"
           prompt: |
             A user commented on this PR. Respond appropriately.
 
@@ -196,4 +197,3 @@ jobs:
             1. If they're asking for changes, make them with Edit tool
             2. If making changes, commit and push: git add -A && git commit -m "Address feedback" && git push
             3. Reply using: gh pr comment ${{ github.event.issue.number }} --body "<your response>"
-          claude_args: "--max-turns 15 --allowedTools Edit,Read,Bash,Glob,Grep,Write"
