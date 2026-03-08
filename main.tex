@@ -151,7 +151,7 @@
 \section{Data}
 \begin{itemize}
   \item \textbf{Register prediction:} Brown corpus (genre/register labels). \citep{Kucera1968BrownCorpus}
-  \item \textbf{TAMV intrinsic evaluation:} Test cases derived from Longman Grammar examples, providing gold TAMV annotations for verbal complexes. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
+  \item \textbf{TAMV intrinsic evaluation:} Two complementary tracks: (i) benchmark against the annotated TMV/TAMV data from Ramm et al., and (ii) targeted sentence-level checks using examples selected (and when needed minimally adapted) from Longman Grammar to verify expected TAMV behavior across registers. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
   \item \textbf{Toxicity prediction:} (To add) dataset used in the slides once its BibTeX key is available.
   \item \textbf{VAD prediction:} (To add) dataset/label source once its BibTeX key is available.
 \end{itemize}
@@ -203,7 +203,19 @@
 \section{Experiments}
 \subsection{Intrinsic evaluation: TAMV extraction reliability}
 \begin{itemize}
-  \item Evaluate extracted TAMV against gold annotations derived from Longman Grammar examples: per-dimension accuracy/F1 and joint-label accuracy; error taxonomy. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
+  \item \textbf{Evaluation methodology:} We run intrinsic TAMV evaluation in two ways. First, we compare extraction output against the annotated reference data released by Ramm et al.\ and report per-dimension scores (tense, aspect, mood, voice) plus joint-label exact match for full TAMV tuples. \citep{Ramm2017AnnotatingGerman} Second, we run targeted validation on sentence examples drawn from Longman Grammar (with minimal adaptations where needed) to check that extracted TAMV labels align with the grammatical patterns Longman documents across registers. \citep{Biber20101999LongmanEnglish}
+
+  \item \textbf{Scope clarification:} Longman examples are used as linguistically motivated validation checks; they are not presented as a newly crowdsourced or multi-annotator gold corpus in this study.
+
+  \item \textbf{Error taxonomy:} We categorize extraction errors into the following types to diagnose systematic failure modes:
+    \begin{itemize}
+      \item \emph{Parse errors:} Incorrect dependency structure from spaCy prevents correct auxiliary/main-verb identification.
+      \item \emph{Tense errors:} Misidentification of past/present/future, often due to modal-future confusion (\emph{will} vs.\ present) or irregular verb forms.
+      \item \emph{Aspect errors:} Confusion between progressive and perfect aspect markers, or failure to detect perfect-progressive combinations.
+      \item \emph{Mood errors:} Modal polysemy (e.g., \emph{would} as past habitual vs.\ conditional) or subjunctive detection failures in \emph{that}-clause complements.
+      \item \emph{Voice errors:} Passive/participle ambiguity (adjectival passives vs.\ verbal passives) or missing \texttt{nsubjpass} relation in UD parse.
+      \item \emph{Clause segmentation errors:} Incorrect boundaries for verbal complexes, leading to missing or spurious TAMV annotations.
+    \end{itemize}
 \end{itemize}
 
 \subsection{Register prediction (Brown)}
@@ -226,7 +238,7 @@
 
 \section{Results}
 \begin{itemize}
-  \item \textbf{TAMV reliability:} performance on Longman-derived test cases and major error sources. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
+  \item \textbf{TAMV reliability:} performance against Ramm et al.\ annotated reference data, plus consistency checks on Longman-derived examples, with major error sources reported. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
   \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{Kucera1968BrownCorpus,Biber20101999LongmanEnglish}
   \item \textbf{Toxicity:} toxicity prediction results (add citations once bib keys exist).
   \item \textbf{VAD:} VAD prediction results (add citations once bib keys exist).
@@ -249,7 +261,7 @@
 \begin{itemize}
   \item \textbf{Summary of approach:} We present a dependency-based TAMV extraction pipeline built exclusively on spaCy and Universal Dependencies (UD) representation. Unlike prior TMV extraction systems that rely on Stanford Dependencies and the Mate parser \citep{Ramm2017AnnotatingGerman}, our approach leverages spaCy's UD-style parses where content verbs head verbal complexes. This design choice aligns with modern NLP tooling and facilitates integration into contemporary Python-based pipelines. \citep{Nivre2020UniversalCollection,Okhapkin2021ConstructingLibraries}
 
-  \item \textbf{Intrinsic evaluation findings:} Our extraction rules achieve high per-dimension accuracy on test cases derived from Longman Grammar examples \citep{Biber20101999LongmanEnglish}, validating that UD-style dependency parses reliably support TAMV inference. Tense and voice extraction show particularly robust performance, while mood/modality detection faces challenges in disambiguating modal polysemy and subjunctive contexts.
+  \item \textbf{Intrinsic evaluation findings:} Our extraction rules are evaluated against Ramm et al.\ annotated reference data \citep{Ramm2017AnnotatingGerman} and additionally checked on Longman-derived sentence examples \citep{Biber20101999LongmanEnglish}, supporting that UD-style dependency parses can recover TAMV patterns reliably. Tense and voice extraction show particularly robust performance, while mood/modality detection faces challenges in disambiguating modal polysemy and subjunctive contexts.
 
   \item \textbf{Downstream task performance:} Extracted TAMV distributions successfully predict register on the Brown corpus \citep{Kucera1968BrownCorpus}, confirming the register-sensitivity of TAMV features documented in Longman Grammar. We further demonstrate that the same extraction backbone supports separate toxicity and VAD prediction tasks when paired with task-appropriate supervision.
 
