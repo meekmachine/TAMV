@@ -46,15 +46,19 @@ RQ2: Extraction Method  →  RQ1: Predictive Power
 
 **The Four Dimensions of Verbal Grammar**
 
-| Dimension | What It Captures | Example | Key Source |
-|-----------|------------------|---------|------------|
-| **Tense** | Location in time | *"She **wrote**"* vs *"She **writes**"* | Comrie (1985) *Tense* |
-| **Aspect** | Internal temporal structure | *"She **is writing**"* vs *"She **has written**"* | Comrie (1976) *Aspect* |
-| **Mood** | Speaker's attitude/reality status | *"She **might** write"* vs *"**Write** this!"* | Palmer (2001) *Mood and Modality* |
-| **Voice** | Subject-action relationship | *"She wrote it"* vs *"It **was written**"* | Biber et al. (1999) |
+| Dimension | What It Captures | Example | TAMV Breakdown | Key Source |
+|-----------|------------------|---------|----------------|------------|
+| **Tense** | Location in time | *"She **wrote**"* vs *"She **writes**"* | PAST vs PRESENT | Comrie (1985) *Tense* |
+| **Aspect** | Internal temporal structure | *"She **is writing**"* vs *"She **has written**"* | PROGRESSIVE vs PERFECT | Comrie (1976) *Aspect* |
+| **Mood** | Speaker's attitude/reality status | *"She **might** write"* vs *"**Write** this!"* | MODAL (might) vs IMPERATIVE | Palmer (2001) *Mood and Modality* |
+| **Voice** | Subject-action relationship | *"She wrote it"* vs *"It **was written**"* | ACTIVE vs PASSIVE | Biber et al. (1999) |
 
 **Combined Label Example:**
 > *"The report **has been written**"* → `present-perfect-indicative-passive`
+> - **T**ense: PRESENT
+> - **A**spect: PERFECT
+> - **M**ood: INDICATIVE
+> - **V**oice: PASSIVE
 
 > **Speaker Notes:** Use concrete examples. Key insight: these four dimensions combine to create a "grammatical fingerprint" for each verb. A single document has a distribution over these fingerprints—that distribution is the TAMV profile we analyze.
 
@@ -92,12 +96,12 @@ RQ2: Extraction Method  →  RQ1: Predictive Power
 
 Aspect captures **how a speaker views the internal structure of an event**:
 
-| Aspect | Viewpoint | Example | Pragmatic Effect |
-|--------|-----------|---------|------------------|
-| **Simple** | Event as a whole | *"I wrote the report"* | Completed, distanced |
-| **Progressive** | Event in progress | *"I am writing the report"* | Ongoing, immediate |
-| **Perfect** | Event with current relevance | *"I have written the report"* | Result matters now |
-| **Perfect-Progressive** | Ongoing with duration | *"I have been writing..."* | Emphasis on effort/duration |
+| Aspect | Viewpoint | Example | TAMV Breakdown | Pragmatic Effect |
+|--------|-----------|---------|----------------|------------------|
+| **Simple** | Event as a whole | *"I wrote the report"* | T: PAST, A: SIMPLE, M: INDICATIVE, V: ACTIVE | Completed, distanced |
+| **Progressive** | Event in progress | *"I am writing the report"* | T: PRESENT, A: PROGRESSIVE, M: INDICATIVE, V: ACTIVE | Ongoing, immediate |
+| **Perfect** | Event with current relevance | *"I have written the report"* | T: PRESENT, A: PERFECT, M: INDICATIVE, V: ACTIVE | Result matters now |
+| **Perfect-Progressive** | Ongoing with duration | *"I have been writing..."* | T: PRESENT, A: PERFECT-PROGRESSIVE, M: INDICATIVE, V: ACTIVE | Emphasis on effort/duration |
 
 **Why This Matters for Prediction:**
 
@@ -167,19 +171,23 @@ Aspect captures **how a speaker views the internal structure of an event**:
 
 **Rule Examples (from validate_tamv.py, sourced from Biber et al. 1999)**
 
-| Dimension | Rule | Test Case Example | Source |
-|-----------|------|-------------------|--------|
-| **Tense** | VBD tag → past | *"They **arrived** yesterday."* | Biber Ch. 6 |
-| **Tense** | will/shall + VB → future | *"She **will write** a novel."* | Biber Ch. 6 |
-| **Aspect** | have + VBN → perfect | *"She **has written** three novels."* | Biber Ch. 6 |
-| **Aspect** | be + VBG → progressive | *"They **were discussing** the proposal."* | Biber Ch. 6 |
-| **Mood** | might/could/should/would → subjunctive | *"He **might arrive** late."* | Palmer Ch. 4; TMV-annotator |
-| **Mood** | VB without subject → imperative | *"**Write** the report now."* | Biber Ch. 8 |
-| **Voice** | be/get + VBN → passive | *"The house **got destroyed** in the storm."* | Biber Ch. 6 |
+| Dimension | Rule | Test Case Example | TAMV Breakdown | Source |
+|-----------|------|-------------------|----------------|--------|
+| **Tense** | VBD tag → past | *"They **arrived** yesterday."* | T: PAST, A: SIMPLE, M: INDICATIVE, V: ACTIVE | Biber Ch. 6 |
+| **Tense** | will/shall + VB → future | *"She **will write** a novel."* | T: FUTURE, A: SIMPLE, M: INDICATIVE, V: ACTIVE | Biber Ch. 6 |
+| **Aspect** | have + VBN → perfect | *"She **has written** three novels."* | T: PRESENT, A: PERFECT, M: INDICATIVE, V: ACTIVE | Biber Ch. 6 |
+| **Aspect** | be + VBG → progressive | *"They **were discussing** the proposal."* | T: PAST, A: PROGRESSIVE, M: INDICATIVE, V: ACTIVE | Biber Ch. 6 |
+| **Mood** | might/could/should/would → subjunctive | *"He **might arrive** late."* | T: PRESENT, A: SIMPLE, M: MODAL (might), V: ACTIVE | Palmer Ch. 4; TMV-annotator |
+| **Mood** | VB without subject → imperative | *"**Write** the report now."* | T: PRESENT, A: SIMPLE, M: IMPERATIVE, V: ACTIVE | Biber Ch. 8 |
+| **Voice** | be/get + VBN → passive | *"The house **got destroyed** in the storm."* | T: PAST, A: SIMPLE, M: INDICATIVE, V: PASSIVE | Biber Ch. 6 |
 
 **Complex Example:**
 > *"She **might have been being watched**."*
 > → `present-perfect-progressive-subjunctive-passive`
+> - **T**ense: PRESENT
+> - **A**spect: PERFECT-PROGRESSIVE
+> - **M**ood: MODAL (might)
+> - **V**oice: PASSIVE
 > (Source: Biber et al. 1999, rare but grammatical)
 
 > **Speaker Notes:** Show that our rules are grounded in linguistic literature. Every test case has a citation. The complex example shows we handle 5-verb auxiliary chains correctly.
@@ -320,22 +328,33 @@ Aspect captures **how a speaker views the internal structure of an event**:
 
 **Tense Examples (Biber et al. 1999, Ch. 6):**
 - Present: *"She writes novels."* → `present-simple-indicative-active`
+  - **T**ense: PRESENT, **A**spect: SIMPLE, **M**ood: INDICATIVE, **V**oice: ACTIVE
 - Past: *"They arrived yesterday."* → `past-simple-indicative-active`
+  - **T**ense: PAST, **A**spect: SIMPLE, **M**ood: INDICATIVE, **V**oice: ACTIVE
 - Future: *"She will write a novel."* → `future-simple-indicative-active`
+  - **T**ense: FUTURE, **A**spect: SIMPLE, **M**ood: INDICATIVE, **V**oice: ACTIVE
 
 **Aspect Examples (Biber et al. 1999, Ch. 6):**
 - Progressive: *"She is writing a novel."* → `present-progressive-indicative-active`
+  - **T**ense: PRESENT, **A**spect: PROGRESSIVE, **M**ood: INDICATIVE, **V**oice: ACTIVE
 - Perfect: *"She has written three novels."* → `present-perfect-indicative-active`
+  - **T**ense: PRESENT, **A**spect: PERFECT, **M**ood: INDICATIVE, **V**oice: ACTIVE
 - Perfect-Progressive: *"She has been writing for hours."* → `present-perfect-progressive-indicative-active`
+  - **T**ense: PRESENT, **A**spect: PERFECT-PROGRESSIVE, **M**ood: INDICATIVE, **V**oice: ACTIVE
 
 **Mood Examples:**
 - Modal/Subjunctive (Palmer 2001): *"He might arrive late."* → `present-simple-subjunctive-active`
+  - **T**ense: PRESENT, **A**spect: SIMPLE, **M**ood: MODAL (might), **V**oice: ACTIVE
 - Imperative (Biber Ch. 8): *"Write the report now."* → `present-simple-imperative-active`
+  - **T**ense: PRESENT, **A**spect: SIMPLE, **M**ood: IMPERATIVE, **V**oice: ACTIVE
 - Conditional (Palmer Ch. 6): *"If she writes, it will be published."* → `present-simple-conditional-active`
+  - **T**ense: PRESENT, **A**spect: SIMPLE, **M**ood: INDICATIVE, **V**oice: ACTIVE
 
 **Voice Examples (Biber et al. 1999, Ch. 6):**
 - Be-passive: *"The novel was written by her."* → `past-simple-indicative-passive`
+  - **T**ense: PAST, **A**spect: SIMPLE, **M**ood: INDICATIVE, **V**oice: PASSIVE
 - Get-passive: *"The house got destroyed in the storm."* → `past-simple-indicative-passive`
+  - **T**ense: PAST, **A**spect: SIMPLE, **M**ood: INDICATIVE, **V**oice: PASSIVE
 
 ### A2: TMV-Annotator Alignment
 

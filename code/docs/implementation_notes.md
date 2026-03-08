@@ -32,6 +32,12 @@ TMV-annotator (Ramm et al. 2017) was built for **Mate parser**, which follows th
 
 ### 2.1 Example Sentence: *"She has been writing"*
 
+**TAMV Breakdown:**
+- **T**ense: PRESENT
+- **A**spect: PERFECT-PROGRESSIVE
+- **M**ood: INDICATIVE
+- **V**oice: ACTIVE
+
 **Mate parser (CoNLL-2008 style):**
 ```
 ID  TOKEN    LEMMA  POS  HEAD  DEPREL
@@ -585,6 +591,12 @@ Measure alignment between our spaCy-based extractor and TMV-annotator on the sam
 
 **Sentence:** *"It has never been easy to have a rational conversation about the value of gold."*
 
+**Expected TAMV for "has been easy":**
+- **T**ense: PRESENT
+- **A**spect: PERFECT
+- **M**ood: INDICATIVE
+- **V**oice: ACTIVE (copular, not passive)
+
 | System | Voice Label | Correct? |
 |--------|-------------|----------|
 | TMV-annotator | passive | **NO** |
@@ -608,10 +620,10 @@ It has been easy
 
 **The linguistic distinction:**
 
-| Construction | Example | Structure | Voice |
-|--------------|---------|-----------|-------|
-| **Passive** | "The book has been written" | has + been + **VBN** (past participle) | Passive |
-| **Copular** | "It has been easy" | has + been + **ADJ** (adjective) | Active |
+| Construction | Example | Structure | TAMV Breakdown | Voice |
+|--------------|---------|-----------|----------------|-------|
+| **Passive** | "The book has been written" | has + been + **VBN** (past participle) | T: PRESENT, A: PERFECT, M: INDICATIVE, V: PASSIVE | Passive |
+| **Copular** | "It has been easy" | has + been + **ADJ** (adjective) | T: PRESENT, A: PERFECT, M: INDICATIVE, V: ACTIVE | Active |
 
 **spaCy parse shows this clearly:**
 ```
@@ -633,11 +645,11 @@ The `acomp` (adjectival complement) dependency reveals this is copular, not pass
 
 ### 8.1 Our Extractor's Limitations
 
-| Issue | Example | Cause |
-|-------|---------|-------|
-| Negative imperatives | "Don't forget the meeting." | spaCy parses "don't" as main verb |
-| Mandative subjunctive | "I suggest that he leave." | Rare pattern; requires semantic analysis |
-| Coordinated verbs | "She wrote and edited the report." | May miss second verb in coordination |
+| Issue | Example | Expected TAMV | Cause |
+|-------|---------|---------------|-------|
+| Negative imperatives | "Don't forget the meeting." | T: PRESENT, A: SIMPLE, M: IMPERATIVE, V: ACTIVE | spaCy parses "don't" as main verb |
+| Mandative subjunctive | "I suggest that he leave." | T: PRESENT, A: SIMPLE, M: SUBJUNCTIVE, V: ACTIVE | Rare pattern; requires semantic analysis |
+| Coordinated verbs | "She wrote and edited the report." | T: PAST, A: SIMPLE, M: INDICATIVE, V: ACTIVE (both verbs) | May miss second verb in coordination |
 
 ### 8.2 TMV-Annotator's Limitations
 
