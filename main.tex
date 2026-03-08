@@ -40,13 +40,13 @@
   \item \textbf{Claims:}
     \begin{itemize}
       \item (C1) TAMV can be extracted reliably from \textbf{spaCy} dependency parses under a UD-style representation. \citep{Ramm2017AnnotatingGerman,Nivre2010DependencyParsing}
-      \item (C2) Extracted TAMV distributions can predict \textbf{register} on Brown. \citep{Kucera1968BrownCorpus}
+      \item (C2) Extracted TAMV distributions can predict \textbf{register} on Brown. \citep{19684/682R15.00.}
       \item (C3) The same extracted representation supports \textbf{separate} prediction of toxicity and VAD when paired with task-appropriate supervision.
     \end{itemize}
   \item \textbf{Contributions:}
     \begin{itemize}
       \item spaCy-only Universal Dependency (UD) TAMV extraction with intrinsic evaluation. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
-      \item Register prediction on Brown using extracted TAMV distributions. \citep{Kucera1968BrownCorpus}
+      \item Register prediction on Brown using extracted TAMV distributions. \citep{19684/682R15.00.}
       \item Task-separable experimental design: distinct models/labels/metrics for register vs toxicity vs VAD.
       \item Intrinsic validation using test cases derived from Longman Grammar examples. \citep{Biber20101999LongmanEnglish}
     \end{itemize}
@@ -144,14 +144,14 @@
 
 \subsection{Benchmarks for downstream prediction}
 \begin{itemize}
-  \item Brown provides a classic genre/register-labeled corpus suitable for testing whether extracted TAMV distributions predict register. \citep{Kucera1968BrownCorpus}
+  \item Brown provides a classic genre/register-labeled corpus suitable for testing whether extracted TAMV distributions predict register. \citep{19684/682R15.00.}
   \item Our toxicity benchmark uses the Conversations Gone Awry dataset; we use WikiConv for corpus reconstruction context and ConvoKit for reproducible conversation processing. \citep{Zhang2018ConversationsFailure,Hua2018WikiConv:Community,Chang2020ConvoKit:Conversations}
   \item Our VAD benchmark uses EmoBank for sentence-level valence/arousal/dominance supervision and the NRC VAD Lexicon for lexicon-aggregation baselines. \citep{Buechel2017EmoBank:Analysis,Mohammad2018ObtainingWords}
 \end{itemize}
 
 \section{Data}
 \begin{itemize}
-  \item \textbf{Register prediction:} Brown corpus (genre/register labels). \citep{Kucera1968BrownCorpus}
+  \item \textbf{Register prediction:} Brown corpus (genre/register labels). \citep{19684/682R15.00.}
   \item \textbf{TAMV intrinsic evaluation:} Test cases derived from Longman Grammar examples, providing gold TAMV annotations for verbal complexes. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
   \item \textbf{Toxicity prediction:} Conversations Gone Awry (CGA), a Wikipedia talk-page corpus labeled for conversational derailment and personal attacks, with WikiConv as reconstruction context. \citep{Zhang2018ConversationsFailure,Hua2018WikiConv:Community}
   \item \textbf{VAD prediction:} EmoBank for sentence-level valence/arousal/dominance supervision and the NRC VAD Lexicon for lexicon-driven baseline features. \citep{Buechel2017EmoBank:Analysis,Mohammad2018ObtainingWords}
@@ -209,7 +209,7 @@
 
 \subsection{Register prediction (Brown)}
 \begin{itemize}
-  \item Predict Brown genre/register from TAMV distributions; report accuracy/F1 and confusion patterns. \citep{Kucera1968BrownCorpus}
+  \item Predict Brown genre/register from TAMV distributions; report accuracy/F1 and confusion patterns. \citep{19684/682R15.00.}
   \item Compare learned TAMV-by-register trends to patterns documented in Longman Grammar as a sanity check. \citep{Biber20101999LongmanEnglish}
 \end{itemize}
 
@@ -228,7 +228,7 @@
 \section{Results}
 \begin{itemize}
   \item \textbf{TAMV reliability:} performance on Longman-derived test cases and major error sources. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
-  \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{Kucera1968BrownCorpus,Biber20101999LongmanEnglish}
+  \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{19684/682R15.00.,Biber20101999LongmanEnglish}
   \item \textbf{Toxicity:} report classifier results on CGA with baseline comparisons and failure analysis by conversation stage. \citep{Zhang2018ConversationsFailure}
   \item \textbf{VAD:} report per-dimension (V/A/D) performance with regression/classification metrics and lexicon-baseline gaps. \citep{Buechel2017EmoBank:Analysis,Mohammad2018ObtainingWords}
 \end{itemize}
@@ -252,7 +252,7 @@
 
   \item \textbf{Intrinsic evaluation findings:} Our extraction rules achieve high per-dimension accuracy on test cases derived from Longman Grammar examples \citep{Biber20101999LongmanEnglish}, validating that UD-style dependency parses reliably support TAMV inference. Tense and voice extraction show particularly robust performance, while mood/modality detection faces challenges in disambiguating modal polysemy and subjunctive contexts.
 
-  \item \textbf{Downstream task performance:} Extracted TAMV distributions successfully predict register on the Brown corpus \citep{Kucera1968BrownCorpus}, confirming the register-sensitivity of TAMV features documented in Longman Grammar. We further demonstrate that the same extraction backbone supports separate toxicity and VAD prediction tasks when paired with task-appropriate supervision.
+  \item \textbf{Downstream task performance:} Extracted TAMV distributions successfully predict register on the Brown corpus \citep{19684/682R15.00.}, confirming the register-sensitivity of TAMV features documented in Longman Grammar. We further demonstrate that the same extraction backbone supports separate toxicity and VAD prediction tasks when paired with task-appropriate supervision.
 
   \item \textbf{Comparison with prior work:} Ramm et al.'s TMV-annotator \citep{Ramm2017AnnotatingGerman} operates on SD-style parses from the Mate parser, where auxiliaries head verbal complexes. Our adaptation to spaCy/UD required rewriting extraction rules to traverse dependencies in the opposite direction---from content verb to auxiliary dependents. This demonstrates that TAMV extraction is feasible under either convention, but the UD framing offers advantages in library support, parsing speed, and consistency with the Universal Dependencies ecosystem. \citep{Nivre2020UniversalCollection}
 
