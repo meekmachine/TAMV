@@ -9,16 +9,19 @@ TMV-annotator mood values: indicative, subjunctive
 TMV-annotator tense values: pres, past, presPerf, pastPerf, futureI, futureII, condI, condII
 """
 
+import argparse
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent.parent / "data"
+DEFAULT_INPUT = DATA_DIR / "europarl_expected.tsv"
+DEFAULT_OUTPUT = DATA_DIR / "europarl_tamv.tsv"
 
 
-def parse_europarl_line(line):
+def parse_europarl_line(line, line_no):
     """Parse a line from europarl_expected.tsv (TMV-annotator format)."""
     parts = line.strip().split('\t')
     if len(parts) < 10:
-        return None
+        raise ValueError(f"Line {line_no}: expected >=10 TSV columns, got {len(parts)}")
 
     sent_idx = int(parts[0])
     token_pos = parts[1]
@@ -77,10 +80,16 @@ def parse_europarl_line(line):
         'passive': 'PASSIVE',
     }
 
-    our_tense = tense_map.get(tmv_tense, 'PRESENT')
+    if tmv_tense not in tense_map:
+        raise ValueError(f"Line {line_no}: unknown TMV tense value '{tmv_tense}'")
+    our_tense = tense_map[tmv_tense]
     our_aspect = get_aspect(tmv_tense, progressive)
-    our_mood = mood_map.get(tmv_mood, 'INDICATIVE')  # Use actual TMV mood!
-    our_voice = voice_map.get(tmv_voice, 'ACTIVE')
+    if tmv_mood not in mood_map:
+        raise ValueError(f"Line {line_no}: unknown TMV mood value '{tmv_mood}'")
+    if tmv_voice not in voice_map:
+        raise ValueError(f"Line {line_no}: unknown TMV voice value '{tmv_voice}'")
+    our_mood = mood_map[tmv_mood]
+    our_voice = voice_map[tmv_voice]
 
     # Determine category for reporting
     if our_mood == 'SUBJUNCTIVE':
@@ -104,20 +113,19 @@ def parse_europarl_line(line):
     }
 
 
-def convert_europarl():
+def convert_europarl(expected_file=DEFAULT_INPUT, output_file=DEFAULT_OUTPUT):
     """Convert Europarl TMV-annotator data to TAMV validation format."""
-    expected_file = DATA_DIR / "europarl_expected.tsv"
-    output_file = DATA_DIR / "europarl_tamv.tsv"
-
     annotations = []
-    with open(expected_file, 'r') as f:
-        for line in f:
-            parsed = parse_europarl_line(line)
+    with open(expected_file, 'r', encoding='utf-8') as f:
+        for line_no, line in enumerate(f, start=1):
+            if not line.strip():
+                continue
+            parsed = parse_europarl_line(line, line_no)
             if parsed:
                 annotations.append(parsed)
 
     # Write converted data
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         f.write("index\tverb\ttense\taspect\tmood\tvoice\tcategory\tsource\n")
         for ann in annotations:
             f.write(f"{ann['sent_idx']}\t{ann['verb']}\t{ann['tense']}\t{ann['aspect']}\t{ann['mood']}\t{ann['voice']}\t{ann['category']}\t{ann['source']}\n")
@@ -138,4 +146,18 @@ def convert_europarl():
 
 
 if __name__ == "__main__":
-    convert_europarl()
+    parser = argparse.ArgumentParser(description="Convert TMV Europarl TSV into TAMV validation TSV.")
+    parser.add_argument(
+        "--input",
+        type=Path,
+        default=DEFAULT_INPUT,
+        help=f"Path to TMV-format TSV (default: {DEFAULT_INPUT})",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=DEFAULT_OUTPUT,
+        help=f"Path to TAMV-format TSV output (default: {DEFAULT_OUTPUT})",
+    )
+    args = parser.parse_args()
+    convert_europarl(expected_file=args.input, output_file=args.output)
