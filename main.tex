@@ -188,6 +188,7 @@
 \subsection{Task-specific feature sets (kept separate)}
 \begin{itemize}
   \item \textbf{Register task features:} TAMV distributions (counts/normalized rates) over documents/segments.
+  \item For Exp 1, each document is represented by normalized TAMV rates (counts divided by document-level clause totals), so model inputs are comparable across varying document lengths. Rare TAMV combinations are grouped into an \emph{other} bucket to reduce sparsity while preserving interpretable major patterns. This representation keeps features linguistically transparent at the tense/aspect/mood/voice level.
   \item \textbf{Toxicity task features:} TAMV distributions and/or TAMV trajectories over turns (if conversational); evaluated only on toxicity labels.
   \item \textbf{VAD task features:} TAMV + lexical features used to predict continuous VAD labels (or binned labels), evaluated only on VAD supervision.
 \end{itemize}
@@ -204,10 +205,13 @@
       \item \emph{Toxicity:} Majority-class baseline and lexicon-based approaches.
       \item \emph{VAD:} Mean-value baseline and lexicon-only regression.
     \end{itemize}
+  \item For register prediction, we use a lexical bag-of-words (BoW) logistic-regression baseline to contextualize TAMV-only performance. BoW features are extracted from document text using standard unigram/bigram weighting, while TAMV features are extracted from verb-phrase distributions. Both baselines and TAMV models are trained and evaluated under identical train/test splits and cross-validation settings to ensure a fair comparison.
   \item \textbf{Statistical significance:} We use paired bootstrap resampling (n=10,000) to compute 95\% confidence intervals and assess significance of differences between models.
 \end{itemize}
 
 \section{Experiments}
+We separate intrinsic and extrinsic evaluation by design: Exp 0 measures TAMV extraction fidelity against gold annotations, while Exp 1 tests whether extracted TAMV distributions are predictive of register labels. This separation ensures that downstream gains are interpreted in light of verified extraction quality rather than conflating extraction and classification performance.
+
 \subsection{Intrinsic evaluation: TAMV extraction reliability}
 \begin{itemize}
   \item Evaluate extracted TAMV against gold annotations derived from Longman Grammar examples: per-dimension accuracy/F1 and joint-label accuracy; error taxonomy. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
@@ -216,6 +220,7 @@
 \subsection{Register prediction (Brown)}
 \begin{itemize}
   \item Predict Brown genre/register from TAMV distributions; report accuracy/F1 and confusion patterns. \citep{19684/682R15.00.}
+  \item In Exp 1, the target label is Brown genre, and the primary model uses TAMV distributions as document-level predictors. We report majority-class and BoW lexical baselines alongside TAMV-based classification, using accuracy, macro-F1, and confusion matrices. This setup tests whether grammatical style features provide measurable register signal beyond trivial priors and in relation to lexical baselines.
   \item Compare learned TAMV-by-register trends to patterns documented in Longman Grammar as a sanity check. \citep{Biber20101999LongmanEnglish}
 \end{itemize}
 
@@ -234,7 +239,7 @@
 \section{Results}
 \begin{itemize}
   \item \textbf{TAMV reliability:} performance on Longman-derived test cases and major error sources. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
-  \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{19684/682R15.00.,Biber20101999LongmanEnglish}
+  \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{19684/682R15.00.,Biber20101999LongmanEnglish} For register prediction, we report comparative performance for majority, BoW, and TAMV-based models, then analyze per-genre confusion patterns to identify where TAMV contributes most strongly. We also inspect top weighted TAMV features per genre to connect predictive behavior back to interpretable grammatical variation.
   \item \textbf{Toxicity:} report classifier results on CGA with baseline comparisons and failure analysis by conversation stage. \citep{Zhang2018ConversationsFailure}
   \item \textbf{VAD:} report per-dimension (V/A/D) performance with regression/classification metrics and lexicon-baseline gaps. \citep{Buechel2017EmoBank:Analysis,Mohammad2018ObtainingWords}
 \end{itemize}
