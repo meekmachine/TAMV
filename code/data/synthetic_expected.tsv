@@ -64,3 +64,21 @@ index	verb	tense	aspect	mood	voice	category	source
 49	being	PAST	PROGRESSIVE	INDICATIVE	ACTIVE	aspect_progressive	User test data
 50	supposed	PAST	SIMPLE	INDICATIVE	PASSIVE	voice_passive	User test data
 50	told	NONE	PERFECT	INFINITIVAL	PASSIVE	complex	User test data
+51	written	PRESENT	PERFECT	INDICATIVE	ACTIVE	aspect_perfect	Longman Grammar (Ch. 5-6)
+51	ignored	PRESENT	PERFECT	INDICATIVE	ACTIVE	aspect_perfect	Longman Grammar (Ch. 5-6)
+52	seen	PAST	PERFECT	INDICATIVE	ACTIVE	aspect_perfect	Longman Grammar (Ch. 5-6)
+53	going	PRESENT	PROGRESSIVE	INDICATIVE	ACTIVE	aspect_progressive	Longman Grammar (Ch. 5-6)
+54	been	PRESENT	PERFECT	INDICATIVE	ACTIVE	aspect_perfect	Longman Grammar (Ch. 5-6)
+55	been	PRESENT	PERFECT	INDICATIVE	ACTIVE	aspect_perfect	Longman Grammar (Ch. 5-6)
+56	determined	PRESENT	PERFECT	INDICATIVE	PASSIVE	complex	Longman Grammar (Ch. 5-6)
+56	is	PRESENT	SIMPLE	INDICATIVE	ACTIVE	tense_present	Longman Grammar (Ch. 5-6)
+57	thrown	PAST	PERFECT	INDICATIVE	PASSIVE	complex	Longman Grammar (Ch. 5-6)
+58	supplied	PRESENT	SIMPLE	MODAL	PASSIVE	complex	Longman Grammar (Ch. 5-6)
+58	carries	PRESENT	SIMPLE	INDICATIVE	ACTIVE	tense_present	Longman Grammar (Ch. 5-6)
+59	developed	PRESENT	PERFECT	INDICATIVE	PASSIVE	complex	Longman Grammar (Ch. 5-6)
+59	fitted	PRESENT	SIMPLE	MODAL	PASSIVE	complex	Longman Grammar (Ch. 5-6)
+60	come	PRESENT	PERFECT	MODAL	ACTIVE	complex	Longman Grammar (Ch. 5-6)
+61	trying	FUTURE	PROGRESSIVE	INDICATIVE	ACTIVE	complex	Longman Grammar (Ch. 5-6)
+62	see	PAST	SIMPLE	INDICATIVE	ACTIVE	tense_past	Longman Grammar (Ch. 5-6)
+63	looks	PRESENT	SIMPLE	INDICATIVE	ACTIVE	tense_present	Longman Grammar (Ch. 5-6)
+64	feel	PRESENT	SIMPLE	INDICATIVE	ACTIVE	tense_present	Longman Grammar (Ch. 5-6)
