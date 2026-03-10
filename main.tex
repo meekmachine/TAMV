@@ -30,12 +30,14 @@
   \item We show that TAMV can be reliably inferred from dependency parses produced by the spaCy library for python. And, additionally, that Universal Dependencies (UD) representation is well-suited to robust large-scale extraction. \citep{Ramm2017AnnotatingGerman,Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
   \item We evaluate three prediction problems \textbf{separately}: register prediction, toxicity prediction, and VAD prediction, using task-appropriate datasets and metrics.
   \item We ground our hypothesis in Longman Grammar's documentation of register-conditioned TAMV variation, and derive validation test cases from its examples to evaluate extraction accuracy (Longman is not used as a prediction dataset). \citep{Biber20101999LongmanEnglish}
+  \item We position TAMV profiles as interpretable stylometric features: grammatical style signals that complement lexical stylometry for register and discourse modeling. \citep{Stamatatos2009SurveyMethods,Koppel2009ComputationalMethods}
 \end{itemize}
 \end{abstract}
 
 \section{Introduction}
 \begin{itemize}
   \item \textbf{Motivation:} Verb phrase choices encode temporal framing (tense/aspect), stance (mood/modality), and agency (voice); these grammatical choices vary systematically by register and interactional context. \citep{Biber20101999LongmanEnglish}
+  \item This framing aligns with computational stylometry, where quantitative linguistic features are used to model stylistic variation across domains such as authorship and register analysis. \citep{Holmes1998EvolutionStylometry,Stamatatos2009SurveyMethods}
   \item \textbf{Goal:} Build an interpretable TAMV extraction pipeline from dependency structure and test its usefulness in three downstream prediction settings \emph{evaluated independently}.
   \item \textbf{Claims:}
     \begin{itemize}
@@ -102,6 +104,7 @@
         \item \textbf{T}ense: PAST, \textbf{A}spect: SIMPLE, \textbf{M}ood: INDICATIVE, \textbf{V}oice: PASSIVE
       \end{itemize}
     \end{itemize}
+  \item Register analysis is closely related to stylometry: classic work emphasizes lexical markers (e.g., function-word distributions), while newer approaches benefit from linguistically structured grammatical features with clearer interpretability. \citep{Mosteller1964InferenceDisputedAuthorship,Argamon2007StylisticTextClassification,Biber2009RegisterGenreStyle}
 \end{itemize}
 
 \subsection{Dependency parsing and UD vs.\ SD framing}
@@ -132,6 +135,7 @@
 \subsection{Linguistic evidence for TAMV and register}
 \begin{itemize}
   \item Longman Grammar documents register-conditioned differences in verb phrase systems that motivate TAMV as a register-sensitive feature family. \citep{Biber20101999LongmanEnglish}
+  \item In stylometric terms, TAMV distributions operationalize grammatical style and complement lexical-only feature sets in text profiling. \citep{Stamatatos2009SurveyMethods,Koppel2009ComputationalMethods}
 \end{itemize}
 
 \subsection{Dependency-based TAMV/TMV extraction}
@@ -242,6 +246,7 @@
 \section{Discussion}
 \begin{itemize}
   \item Strengths: interpretable grammatical signal; portable extraction via spaCy/UD-style dependency structure. \citep{Nivre2010DependencyParsing,Okhapkin2021ConstructingLibraries}
+  \item Connection to stylometry: TAMV features provide a linguistically grounded alternative to surface-level lexical markers, supporting explainable style analysis across tasks. \citep{Mosteller1964InferenceDisputedAuthorship,Stamatatos2009SurveyMethods}
   \item What differs across tasks: why TAMV helps register, and what additional signals may be needed for toxicity and VAD (without conflating the evaluations).
   \item Role of Longman Grammar: theoretical grounding for TAMV--register connection and source of validation test cases, not a prediction dataset. \citep{Biber20101999LongmanEnglish}
 \end{itemize}
