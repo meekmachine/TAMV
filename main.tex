@@ -198,6 +198,10 @@
   \item \textbf{Metrics:} We report accuracy, precision, recall, and F1-score (macro-averaged) for classification tasks. For TAMV extraction, we additionally report per-dimension accuracy (tense, aspect, mood, voice separately) and joint-label exact match.
   \item \textbf{Data splits:} Each task uses an 80/20 train/test split with stratified sampling to preserve label distributions. For intrinsic TAMV evaluation, we use held-out test cases not seen during rule development.
   \item \textbf{Cross-validation:} Where dataset size permits, we perform 5-fold cross-validation and report mean and standard deviation of metrics.
+  \item \textbf{Modeling strategy:} For classification tasks, the primary TAMV model is multinomial logistic regression (not linear regression), chosen for stable optimization on sparse normalized feature vectors and direct coefficient-level interpretability of TAMV effects by label.
+  \item For register prediction, we use a lexical bag-of-words (BoW) logistic-regression baseline to contextualize TAMV-only performance. BoW features are extracted from document text using standard unigram/bigram weighting, while TAMV features are extracted from verb-phrase distributions. Both baselines and TAMV models are trained and evaluated under identical train/test splits and cross-validation settings to ensure a fair comparison.
+  \item We treat Random Forest as a secondary non-linear comparator rather than the primary model: it provides a quick test of whether TAMV feature interactions add signal beyond linear decision boundaries, but it is less directly interpretable than logistic regression and is not used as the headline method.
+  \item We do not prioritize deep neural models in the core register experiment because the currently labeled document-level register set is relatively small; this limits reliable estimation and can inflate variance without careful regularization and substantially larger labeled corpora.
   \item \textbf{Baselines:}
     \begin{itemize}
       \item \emph{Intrinsic:} Comparison against TMV-annotator output on Europarl sentences parsed by both Mate (SD) and spaCy (UD).
@@ -205,7 +209,6 @@
       \item \emph{Toxicity:} Majority-class baseline and lexicon-based approaches.
       \item \emph{VAD:} Mean-value baseline and lexicon-only regression.
     \end{itemize}
-  \item For register prediction, we use a lexical bag-of-words (BoW) logistic-regression baseline to contextualize TAMV-only performance. BoW features are extracted from document text using standard unigram/bigram weighting, while TAMV features are extracted from verb-phrase distributions. Both baselines and TAMV models are trained and evaluated under identical train/test splits and cross-validation settings to ensure a fair comparison.
   \item \textbf{Statistical significance:} We use paired bootstrap resampling (n=10,000) to compute 95\% confidence intervals and assess significance of differences between models.
 \end{itemize}
 
@@ -220,7 +223,7 @@ We separate intrinsic and extrinsic evaluation by design: Exp 0 measures TAMV ex
 \subsection{Register prediction (Brown)}
 \begin{itemize}
   \item Predict Brown genre/register from TAMV distributions; report accuracy/F1 and confusion patterns. \citep{19684/682R15.00.}
-  \item In Exp 1, the target label is Brown genre, and the primary model uses TAMV distributions as document-level predictors. We report majority-class and BoW lexical baselines alongside TAMV-based classification, using accuracy, macro-F1, and confusion matrices. This setup tests whether grammatical style features provide measurable register signal beyond trivial priors and in relation to lexical baselines.
+  \item In Exp 1, the target label is Brown genre, and we follow the shared modeling protocol from \S5.4: multinomial logistic regression as the primary TAMV classifier, majority and BoW baselines, and Random Forest as a secondary non-linear comparator. We report accuracy, macro-F1, and confusion matrices to test whether grammatical style features provide measurable register signal beyond trivial priors and in relation to lexical baselines.
   \item Compare learned TAMV-by-register trends to patterns documented in Longman Grammar as a sanity check. \citep{Biber20101999LongmanEnglish}
 \end{itemize}
 
@@ -268,13 +271,15 @@ We separate intrinsic and extrinsic evaluation by design: Exp 0 measures TAMV ex
 
   \item \textbf{Comparison with prior work:} Ramm et al.'s TMV-annotator \citep{Ramm2017AnnotatingGerman} operates on SD-style parses from the Mate parser, where auxiliaries head verbal complexes. Our adaptation to spaCy/UD required rewriting extraction rules to traverse dependencies in the opposite direction---from content verb to auxiliary dependents. This demonstrates that TAMV extraction is feasible under either convention, but the UD framing offers advantages in library support, parsing speed, and consistency with the Universal Dependencies ecosystem. \citep{Nivre2020UniversalCollection}
 
-  \item \textbf{Future work:} Integrating temporal structure annotations \citep{Derczynski2012AnStructure} could resolve tense/aspect ambiguities. Expanding coverage to non-finite clauses would capture a fuller picture of verbal systems. Cross-linguistic extension using UD treebanks in other languages could test whether similar rule patterns generalize beyond English.
+  \item \textbf{Future work:} Integrating temporal structure annotations \citep{Derczynski2012AnStructure} could resolve tense/aspect ambiguities. Expanding coverage to non-finite clauses would capture a fuller picture of verbal systems. Cross-linguistic extension using UD treebanks in other languages could test whether similar rule patterns generalize beyond English. For downstream prediction, larger register-labeled corpora would enable stronger non-linear and deep-learning comparisons (e.g., boosted trees, neural classifiers) under robust document-level split controls.
 \end{itemize}
 
 \section*{Limitations}
 \begin{itemize}
   \item Dependency parsing and clause segmentation errors can propagate into TAMV labeling. \citep{Nivre2010DependencyParsing}
   \item TAMV scope limitations (modal ambiguity, passive/participle ambiguity, non-finite handling) remain open. \citep{Ramm2017AnnotatingGerman,DonickeClause-LevelGerman}
+  \item Register modeling currently uses a relatively small supervised set (Brown document labels), so non-linear model estimates (including Random Forest) may be high-variance and should be interpreted as comparative diagnostics rather than definitive gains.
+  \item Auto-tagging additional text with TAMV expands feature availability but does not by itself create new gold register labels; scaling supervised experiments requires additional labeled corpora or carefully designed weak/semi-supervised protocols.
   \item Toxicity/VAD sections require adding the dataset and lexicon BibTeX entries once Mendeley sync is complete.
 \end{itemize}
 
