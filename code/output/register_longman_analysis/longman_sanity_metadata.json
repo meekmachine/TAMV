@@ -1,0 +1,31 @@
+{
+  "input_dir": "/Users/frankabugnail/TAMV/code/output/register_experiment",
+  "top_k": 3,
+  "source_run_info": {
+    "input_file": "/Users/frankabugnail/TAMV/code/output/tamv_profiles.csv",
+    "output_dir": "/Users/frankabugnail/TAMV/code/output/register_experiment",
+    "seed": 42,
+    "rows_total": 4688,
+    "rows_brown": 500,
+    "genres": [
+      "adventure",
+      "belles_lettres",
+      "editorial",
+      "fiction",
+      "government",
+      "hobbies",
+      "humor",
+      "learned",
+      "lore",
+      "mystery",
+      "news",
+      "religion",
+      "reviews",
+      "romance",
+      "science_fiction"
+    ],
+    "n_features_final": 12,
+    "test_size": 0.2,
+    "min_feature_total": 5.0
+  }
+}
