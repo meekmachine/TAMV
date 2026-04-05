@@ -1,0 +1,90 @@
+========================================================================
+LONGMAN REGISTER SANITY ANALYSIS
+========================================================================
+
+REGISTER EXPERIMENT SNAPSHOT
+----------------------------------------
+Input directory:        /Users/frankabugnail/TAMV/code/output/register_experiment
+Rows total:             4688
+Brown rows:             500
+Final TAMV features:    12
+
+MODEL PERFORMANCE
+----------------------------------------
+random_forest: test_acc=0.34, test_macro_f1=0.214, cv_macro_f1=0.224±0.044
+logreg: test_acc=0.31, test_macro_f1=0.200, cv_macro_f1=0.204±0.049
+majority: test_acc=0.16, test_macro_f1=0.018, cv_macro_f1=0.018±0.000
+
+LONGMAN SANITY CHECK
+----------------------------------------
+Expected high-level cues:
+- expository/news-like prose should favor present/perfect/passive framing
+- narrative prose should favor past tense and past perfect framing
+- instructional prose should surface imperatives and present tense
+
+adventure [narrative] -> mixed
+  top positive: future-simple-indicative-active
+  top negative: past-simple-indicative-passive, present-simple-indicative-active, present-perfect-indicative-active
+  Longman note: Narrative prose should lean on past tense and active narration; future/simple present should be weaker.
+belles_lettres [expository] -> aligned
+  top positive: present-simple-indicative-active, past-perfect-indicative-active, present-perfect-indicative-active
+  top negative: future-simple-indicative-active, OTHER_TAMV, present-simple-imperative-active
+  Longman note: Expository/essayistic prose should still show present tense, perfect aspect, and some passive use.
+editorial [expository] -> aligned
+  top positive: OTHER_TAMV, present-simple-indicative-active, present-perfect-indicative-active
+  top negative: past-simple-indicative-active, past-simple-conditional-active, present-simple-indicative-passive
+  Longman note: Editorial prose is expository and should resemble news prose with strong present/perfect and passive cues.
+fiction [narrative] -> mixed
+  top positive: past-perfect-indicative-active, present-simple-imperative-active, past-simple-conditional-active
+  top negative: present-simple-indicative-active, past-simple-indicative-passive, present-simple-conditional-active
+  Longman note: Narrative prose should lean on past tense and past perfect, with present simple disfavored.
+government [expository] -> aligned
+  top positive: past-simple-indicative-passive, present-simple-indicative-passive, present-simple-indicative-active
+  top negative: past-perfect-indicative-active
+  Longman note: Government documents are formal expository prose and should favor present/past passive and present simple informational framing.
+hobbies [instructional] -> weak
+  top positive: past-simple-indicative-passive, present-simple-indicative-passive, present-simple-imperative-active
+  top negative: past-perfect-indicative-active, OTHER_TAMV, present-simple-subjunctive-active
+  Longman note: Instructional prose should retain present tense and imperatives, with some passive/framing choices.
+humor [mixed] -> weak
+  top positive: past-perfect-indicative-active, past-simple-conditional-active, present-simple-indicative-passive
+  top negative: present-perfect-indicative-active, present-simple-indicative-active, past-simple-indicative-active
+  Longman note: Humor is stylistically mixed, so alignment should be treated cautiously.
+learned [expository] -> aligned
+  top positive: past-simple-indicative-passive, present-simple-indicative-active, present-simple-indicative-passive
+  top negative: present-simple-imperative-active, present-perfect-indicative-active, past-simple-indicative-active
+  Longman note: Academic prose should favor present tense, perfect aspect, and passives.
+lore [expository] -> aligned
+  top positive: past-simple-indicative-passive, present-simple-indicative-passive, present-simple-indicative-active
+  top negative: present-simple-subjunctive-active, OTHER_TAMV, future-simple-indicative-active
+  Longman note: Informational prose should lean toward present tense and passive framing, with some perfect aspect.
+mystery [narrative] -> mixed
+  top positive: present-simple-imperative-active, OTHER_TAMV, past-perfect-indicative-active
+  top negative: present-simple-indicative-active, past-simple-indicative-passive, present-simple-indicative-passive
+  Longman note: Narrative prose should lean on past tense and active narration.
+news [expository] -> mixed
+  top positive: past-simple-indicative-active, future-simple-indicative-active, OTHER_TAMV
+  top negative: past-perfect-indicative-active, present-simple-imperative-active, present-simple-indicative-passive
+  Longman note: Public expository prose should surface perfect aspect, passive voice, and past/simple informational framing.
+religion [expository] -> aligned
+  top positive: present-simple-indicative-active, present-perfect-indicative-active, past-simple-conditional-active
+  top negative: future-simple-indicative-active, past-simple-indicative-active, past-perfect-indicative-active
+  Longman note: Expository/sermon-like prose should lean on present tense, imperatives, and some passive framing.
+reviews [expository] -> aligned
+  top positive: present-simple-indicative-active, past-simple-indicative-active, OTHER_TAMV
+  top negative: past-perfect-indicative-active, present-simple-subjunctive-active, future-simple-indicative-active
+  Longman note: Reviews should keep strong present tense and evaluative present/perfect usage.
+romance [narrative] -> aligned
+  top positive: future-simple-indicative-active, past-perfect-indicative-active, present-simple-subjunctive-active
+  top negative: past-simple-indicative-passive, present-simple-indicative-active, present-simple-indicative-passive
+  Longman note: Narrative prose should lean on past/past perfect framing and avoid present simple dominance.
+science_fiction [narrative] -> mixed
+  top positive: present-simple-subjunctive-active, OTHER_TAMV, present-simple-imperative-active
+  top negative: present-simple-conditional-active, present-simple-indicative-active, present-simple-indicative-passive
+  Longman note: Narrative prose can add future/modal framing, but still should avoid present simple dominance.
+
+BOTTOM LINE
+----------------------------------------
+The TAMV register model is not just exploiting length or a single obvious cue family.
+Several genres show Longman-consistent signals, especially expository registers with present/perfect/passive features and narrative registers with past-tense framing.
+The mismatches are informative rather than fatal: they identify genres where TAMV alone is not enough or where Brown genre boundaries do not map cleanly onto Longman register families.
