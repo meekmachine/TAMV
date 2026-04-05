@@ -1,0 +1,8 @@
+{
+  "dataset": "wiki",
+  "seed": 42,
+  "train_size": 0.7,
+  "dev_size": 0.15,
+  "test_size": 0.15,
+  "min_turns": 2
+}

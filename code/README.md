@@ -20,6 +20,9 @@ python -m src extract --corpus brown --max-docs 50
 
 # Analyze CGA conversations
 python -m src cga --dataset wiki --sample-rate 10 --no-show
+
+# Curate the toxicity experiment split protocol
+python -m src toxicity-protocol --dataset wiki
 ```
 
 ---
@@ -138,6 +141,27 @@ This produces:
 - `cga_wiki_zscore_boxplot.png` - Box plot comparison
 - `cga_wiki_top_tamv.png` - Top TAMV combinations by frequency
 
+### Toxicity Protocol Curation
+
+Create the deterministic conversation-level split manifest used by the toxicity experiment:
+
+```bash
+# Build the primary train/dev/test split for CGA-WIKI
+python -m src toxicity-protocol --dataset wiki
+
+# Or use the CMV variant
+python -m src toxicity-protocol --dataset cmv
+```
+
+This produces:
+- `toxicity_protocol/cga_wiki_protocol_report.txt` - Protocol summary and rationale
+- `toxicity_protocol/cga_wiki_split_manifest.tsv` - Authoritative conversation-level split manifest
+- `toxicity_protocol/cga_wiki_train.tsv` - Train split rows
+- `toxicity_protocol/cga_wiki_dev.tsv` - Dev split rows
+- `toxicity_protocol/cga_wiki_test.tsv` - Test split rows
+- `toxicity_protocol/cga_wiki_protocol_config.json` - Seed and split configuration
+- `toxicity_protocol/cga_wiki_split_summary.json` - Per-split statistics
+
 ### Command Line Options
 
 **Extract command** (`python -m src extract`):
@@ -158,6 +182,18 @@ This produces:
 | `--sample-rate` | Take 1 out of every N conversations | `10` |
 | `--output` | Output directory | `output/` |
 | `--no-show` | Don't display interactive plots | False |
+
+**Toxicity protocol command** (`python -m src toxicity-protocol`):
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--dataset` | CGA dataset: `wiki` or `cmv` | `wiki` |
+| `--output-dir` | Output directory | `output/toxicity_protocol` |
+| `--seed` | Random seed for deterministic splits | `42` |
+| `--train-size` | Train split fraction | `0.70` |
+| `--dev-size` | Dev split fraction | `0.15` |
+| `--test-size` | Test split fraction | `0.15` |
+| `--min-turns` | Minimum conversation length to keep | `2` |
 
 ## Validation
 

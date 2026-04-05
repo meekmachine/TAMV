@@ -1,0 +1,35 @@
+[
+  {
+    "split": "train",
+    "conversations": 2931,
+    "derailed": 1466,
+    "civil": 1465,
+    "derailment_rate": 0.5001705902422381,
+    "mean_turns": 7.191743432275674,
+    "median_turns": 7.0,
+    "mean_max_toxicity": 0.12108356567995907,
+    "toxicity_coverage_rate": 0.2801091777550324
+  },
+  {
+    "split": "dev",
+    "conversations": 628,
+    "derailed": 314,
+    "civil": 314,
+    "derailment_rate": 0.5,
+    "mean_turns": 7.089171974522293,
+    "median_turns": 7.0,
+    "mean_max_toxicity": 0.10940807858176793,
+    "toxicity_coverage_rate": 0.26910828025477707
+  },
+  {
+    "split": "test",
+    "conversations": 629,
+    "derailed": 314,
+    "civil": 315,
+    "derailment_rate": 0.49920508744038156,
+    "mean_turns": 7.138314785373609,
+    "median_turns": 7.0,
+    "mean_max_toxicity": 0.13069026826712601,
+    "toxicity_coverage_rate": 0.28298887122416533
+  }
+]

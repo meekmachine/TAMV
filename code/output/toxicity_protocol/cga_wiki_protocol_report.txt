@@ -1,0 +1,66 @@
+========================================================================
+CGA TOXICITY PROTOCOL SUMMARY (WIKI)
+========================================================================
+
+PRIMARY DECISIONS
+----------------------------------------
+Primary analysis unit: conversation/thread
+Primary label:         conversation_has_personal_attack / has_derailed
+Primary task:          binary derailment classification
+Leakage policy:        split by conversation id before any turn/utterance feature expansion
+Auxiliary analyses:    utterance/turn-level toxicity remains descriptive, not the primary supervised target
+
+FILTERS
+----------------------------------------
+Minimum turns:         2
+
+SPLIT CONFIGURATION
+----------------------------------------
+Seed:                  42
+Train/dev/test:        0.70 / 0.15 / 0.15
+
+DATASET SUMMARY
+----------------------------------------
+Conversations kept:    4188
+Derailed:              2094
+Civil:                 2094
+Derailment rate:       0.5000
+Mean turns:            7.17
+Median turns:          7.00
+Toxicity coverage:     0.2789
+
+SPLIT SUMMARY
+----------------------------------------
+TRAIN
+  conversations:       2931
+  derailed / civil:    1466 / 1465
+  derailment rate:     0.5002
+  mean turns:          7.19
+  median turns:        7.00
+  mean max toxicity:   0.1211
+  toxicity coverage:   0.2801
+
+DEV
+  conversations:       628
+  derailed / civil:    314 / 314
+  derailment rate:     0.5000
+  mean turns:          7.09
+  median turns:        7.00
+  mean max toxicity:   0.1094
+  toxicity coverage:   0.2691
+
+TEST
+  conversations:       629
+  derailed / civil:    314 / 315
+  derailment rate:     0.4992
+  mean turns:          7.14
+  median turns:        7.00
+  mean max toxicity:   0.1307
+  toxicity coverage:   0.2830
+
+RATIONALE
+----------------------------------------
+Conversation/thread level is the primary supervised unit because the label is defined at the conversation level in CGA.
+This avoids leakage from placing utterances from the same conversation into different splits.
+Turn- and utterance-level toxicity signals remain useful for exploratory analysis and later trajectory features,
+but they should be derived only after the conversation-level split has already been fixed.
