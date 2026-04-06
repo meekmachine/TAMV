@@ -18,6 +18,7 @@ def main():
         print("  python -m src extract [args]      # Extract TAMV features to CSV")
         print("  python -m src cga [args]          # Analyze CGA conversation-level TAMV")
         print("  python -m src utterance [args]    # Analyze TAMV-toxicity at utterance level")
+        print("  python -m src toxicity-baselines  # Run CGA toxicity baselines")
         print()
         print("For help with each command, use: python -m src <command> --help")
         sys.exit(0)
@@ -34,9 +35,12 @@ def main():
     elif command == 'utterance':
         from .utterance_analysis import main as run_utterance
         run_utterance()
+    elif command == 'toxicity-baselines':
+        from .toxicity_baselines import main as run_toxicity_baselines
+        run_toxicity_baselines()
     else:
         print(f"Unknown command: {command}")
-        print("Available commands: extract, cga, utterance")
+        print("Available commands: extract, cga, utterance, toxicity-baselines")
         sys.exit(1)
 
 

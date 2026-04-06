@@ -20,6 +20,9 @@ python -m src extract --corpus brown --max-docs 50
 
 # Analyze CGA conversations
 python -m src cga --dataset wiki --sample-rate 10 --no-show
+
+# Run toxicity baselines
+python -m src toxicity-baselines --dataset wiki
 ```
 
 ---
@@ -138,6 +141,28 @@ This produces:
 - `cga_wiki_zscore_boxplot.png` - Box plot comparison
 - `cga_wiki_top_tamv.png` - Top TAMV combinations by frequency
 
+### Toxicity Baselines
+
+Run the majority and lexicon baselines for the toxicity task:
+
+```bash
+# Use the protocol manifest if it exists
+python -m src toxicity-baselines --dataset wiki --split-manifest output/toxicity_protocol/cga_wiki_split_manifest.tsv
+
+# Or let the script generate a deterministic fallback split
+python -m src toxicity-baselines --dataset wiki
+```
+
+This produces:
+- `toxicity_baselines/baseline_report.txt` - Human-readable summary
+- `toxicity_baselines/results_summary.csv` - Baseline metrics
+- `toxicity_baselines/classification_report_majority.csv` - Majority-class report
+- `toxicity_baselines/classification_report_lexicon.csv` - Lexicon baseline report
+- `toxicity_baselines/confusion_matrix_majority.png` - Majority confusion matrix
+- `toxicity_baselines/confusion_matrix_lexicon.png` - Lexicon confusion matrix
+- `toxicity_baselines/test_predictions.tsv` - Test-set predictions and scores
+- `toxicity_baselines/run_info.json` - Run metadata and chosen threshold
+
 ### Command Line Options
 
 **Extract command** (`python -m src extract`):
@@ -158,6 +183,17 @@ This produces:
 | `--sample-rate` | Take 1 out of every N conversations | `10` |
 | `--output` | Output directory | `output/` |
 | `--no-show` | Don't display interactive plots | False |
+
+**Toxicity baselines command** (`python -m src toxicity-baselines`):
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--dataset` | CGA dataset: `wiki` or `cmv` | `wiki` |
+| `--output-dir` | Output directory | `output/toxicity_baselines` |
+| `--split-manifest` | Optional conversation-level split manifest | `output/toxicity_protocol/cga_wiki_split_manifest.tsv` |
+| `--seed` | Random seed for deterministic fallback splits | `42` |
+| `--min-turns` | Minimum conversation length to keep | `2` |
+| `--threshold` | Override lexicon decision threshold | `None` |
 
 ## Validation
 

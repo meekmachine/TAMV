@@ -1,0 +1,30 @@
+========================================================================
+CGA TOXICITY BASELINES (WIKI)
+========================================================================
+
+PROTOCOL
+----------------------------------------
+Primary unit: conversation/thread
+Primary label: conversation_has_personal_attack / has_derailed
+Split manifest: /Users/frankabugnail/TAMV-issue57/code/output/toxicity_protocol/cga_wiki_split_manifest.tsv
+Seed: 42
+Minimum turns: 2
+Lexicon threshold: 0.000701
+
+DATASET SUMMARY
+----------------------------------------
+Conversations: 4188
+Derailed: 2094
+Civil: 2094
+Derailment rate: 0.5000
+
+RESULTS
+----------------------------------------
+majority: accuracy=0.4992, macro_f1=0.3330, auc=0.5000, positive_rate=1.0000
+lexicon: accuracy=0.7170, macro_f1=0.7076, auc=0.7274, positive_rate=0.3211
+
+NOTES
+----------------------------------------
+The majority baseline provides the lower bound from a trivial class prior.
+The lexicon baseline counts simple toxicity cue words and is tuned only on the train split.
+Conversation-level splitting is preserved so no utterance from one conversation leaks across splits.

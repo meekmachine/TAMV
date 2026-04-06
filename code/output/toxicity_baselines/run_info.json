@@ -1,0 +1,7 @@
+{
+  "dataset": "wiki",
+  "seed": 42,
+  "min_turns": 2,
+  "split_manifest": "/Users/frankabugnail/TAMV-issue57/code/output/toxicity_protocol/cga_wiki_split_manifest.tsv",
+  "threshold": 0.0007011234188487721
+}
