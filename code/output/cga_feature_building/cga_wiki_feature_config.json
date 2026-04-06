@@ -1,0 +1,11 @@
+{
+  "source_profiles": "/Users/frankabugnail/TAMV-issue58/code/output/tamv_profiles.csv",
+  "source_manifest": "/Users/frankabugnail/TAMV-issue57/code/output/toxicity_protocol/cga_wiki_split_manifest.tsv",
+  "feature_rows": 4188,
+  "feature_columns": 122,
+  "splits": {
+    "train": 2931,
+    "test": 629,
+    "dev": 628
+  }
+}
