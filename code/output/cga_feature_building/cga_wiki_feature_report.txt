@@ -1,0 +1,12 @@
+CGA TAMV FEATURE BUILDING REPORT
+============================================================
+Conversations: 4188
+Derailed: 2094
+Civil: 2094
+Feature columns: 122
+Split coverage: {'train': 2931, 'test': 629, 'dev': 628}
+
+Checks
+----------------------------------------
+Unique conversation ids: 4188
+Label/split consistency: True
