@@ -1,0 +1,15 @@
+task	metric	value
+single	source_report	validation_report.txt
+phrase	source_report	phrase_validation_report.txt
+single	single_overall_accuracy	80.0%
+single	single_verb_detection	95.4%
+single	single_tense_accuracy	93.5%
+single	single_aspect_accuracy	98.4%
+single	single_mood_accuracy	88.7%
+single	single_voice_accuracy	100.0%
+phrase	phrase_labels_correct	35 (87.5%)
+phrase	phrase_phrases_detected	40 (93.0%)
+phrase	phrase_tense_accuracy	97.5%
+phrase	phrase_aspect_accuracy	97.5%
+phrase	phrase_mood_accuracy	90.0%
+phrase	phrase_voice_accuracy	100.0%
