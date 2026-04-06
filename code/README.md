@@ -161,6 +161,8 @@ This produces:
 
 ## Validation
 
+See [docs/intrinsic_reproducibility.md](docs/intrinsic_reproducibility.md) for exact intrinsic validation commands, inputs, and artifact paths.
+
 ### Test Data
 
 Test data is stored in `data/` with separate input and expected output files:
