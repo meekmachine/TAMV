@@ -1,0 +1,19 @@
+{
+  "copied_artifacts": [
+    "validation_report.txt",
+    "confusion_tense.png",
+    "confusion_aspect.png",
+    "confusion_mood.png",
+    "confusion_voice.png",
+    "confusion_matrices_combined.png",
+    "phrase_validation_report.txt",
+    "phrase_confusion_tense.png",
+    "phrase_confusion_aspect.png",
+    "phrase_confusion_mood.png",
+    "phrase_confusion_voice.png",
+    "phrase_confusion_matrices_combined.png"
+  ],
+  "summary_table": "intrinsic_summary.tsv",
+  "category_table": "single_category_accuracy.tsv",
+  "failure_table": "failure_cases.tsv"
+}

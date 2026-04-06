@@ -1,0 +1,25 @@
+report	sentence	verb	category	note
+single	It urged that the city take steps to remedy this problem.	take	mood_subjunctive	- Mood: expected subjunctive, got indicative | expected=present-simple-subjunctive-active | got=present-simple-indicative-active
+single	I'm willing to stake my political career on it.	willing	tense_present	- Verb 'willing' not found in extraction | expected=present-simple-indicative-active | got=
+single	He has served as a border patrolman and was in the Signal Corps.	was	tense_past	- Verb 'was' not found in extraction | expected=past-simple-indicative-active | got=
+single	He might have been promoted last year.	promoted	complex	- Tense: expected past, got present | expected=past-perfect-modal-passive | got=present-perfect-subjunctive-passive
+single	He might have been promoted last year.	promoted	complex	- Mood: expected modal, got subjunctive | expected=past-perfect-modal-passive | got=present-perfect-subjunctive-passive
+single	They would have finished if given more time.	finished	mood_conditional	- Tense: expected past, got present | expected=past-perfect-conditional-active | got=present-perfect-conditional-active
+single	Don't forget the meeting.	forget	mood_imperative	- Mood: expected imperative, got indicative | expected=present-simple-imperative-active | got=present-simple-indicative-active
+single	I suggest that he leave immediately.	leave	mood_subjunctive	- Mood: expected subjunctive, got indicative | expected=present-simple-subjunctive-active | got=present-simple-indicative-active
+single	If it were true, he would be punished.	were	mood_subjunctive	- Verb 'were' not found in extraction | expected=past-simple-subjunctive-active | got=
+single	If it were true, he would be punished.	punished	mood_conditional	- Tense: expected future, got present | expected=future-simple-conditional-passive | got=present-simple-conditional-passive
+single	Should you need help, call me.	need	mood_conditional	- Mood: expected conditional, got modal | expected=present-simple-conditional-active | got=present-simple-modal-active
+single	Could you be more specific?	be	mood_modal	- Mood: expected modal, got subjunctive | expected=present-simple-modal-active | got=present-simple-subjunctive-active
+single	It is essential that he be told immediately.	told	mood_subjunctive	- Tense: expected present, got none | expected=present-simple-subjunctive-passive | got=none-simple-participle-passive
+single	It is essential that he be told immediately.	told	mood_subjunctive	- Mood: expected subjunctive, got participle | expected=present-simple-subjunctive-passive | got=none-simple-participle-passive
+single	Having been warned, they were being extremely careful.	warned	complex	- Aspect: expected perfect, got simple | expected=none-perfect-participle-passive | got=none-simple-participle-passive
+phrase	If he finishes early, he will help us.	will help		* Mood: expected indicative, got conditional | expected= | got=
+phrase	After being delayed for months, the project was finally approved.	being delayed		* Tense: expected none, got present | expected= | got=
+phrase	After being delayed for months, the project was finally approved.	being delayed		* Mood: expected participle, got indicative | expected= | got=
+phrase	He said that he would finish the report, but he has been avoiding my emails.	would finish		* Mood: expected conditional, got subjunctive | expected= | got=
+phrase	Having been warned about the delay, she decided to cancel the meeting.	Having been warned		* Aspect: expected perfect, got simple | expected= | got=
+phrase	Why didn't you tell me that the server was down?			- 'was' NOT FOUND | expected= | got=
+phrase	If you had told me earlier, I could have helped.	could have helped		* Mood: expected conditional, got subjunctive | expected= | got=
+phrase	The meeting seems cancelled.			- 'seems' NOT FOUND | expected= | got=
+phrase	She got tired last year.			- 'got tired' NOT FOUND | expected= | got=

@@ -1,0 +1,12 @@
+category	accuracy
+aspect_perfect	4/ 4 (100%)
+aspect_progressive	2/ 2 (100%)
+complex	11/13 (85%)
+mood_conditional	2/ 5 (40%)
+mood_imperative	2/ 3 (67%)
+mood_modal	2/ 3 (67%)
+mood_subjunctive	0/ 4 (0%)
+tense_future	2/ 2 (100%)
+tense_past	10/11 (91%)
+tense_present	7/ 8 (88%)
+voice_passive	10/10 (100%)
