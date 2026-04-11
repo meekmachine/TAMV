@@ -1,22 +1,37 @@
 TMV ALIGNMENT REPORT
 ======================================================================
 
-Total TMV-annotator verbs: 35
+Reference sample: GitHub-published English Mate/TMV sample from the TMV-annotator repository
+
+Sentence count: 25
+Total TMV-annotator rows: 35
+Comparable finite rows after TMV->TAMV conversion: 27
 Matched verbs: 27
 Detection rate: 77.1%
+  95% Wilson CI: [61.0%, 87.9%]
 
-Alignment by dimension:
+Alignment by dimension on matched verbs:
   Tense:  100.0%
   Aspect: 100.0%
   Mood:   100.0%
   Voice:  96.3%
   Full:   96.3%
+  Full-match 95% Wilson CI: [81.7%, 99.3%]
+
+Comparison policy:
+- Non-finite TMV rows are excluded from the TAMV alignment denominator because the local conversion only maps finite TMV rows.
+- Local MODAL labels are collapsed back to TMV-compatible indicative/subjunctive values for this comparison only.
 
 ALL MISMATCHES:
 ----------------------------------------------------------------------
 
-Sentence 2: SAN FRANCISCO - It has never been easy to have a rational co...
+Sentence 2: SAN FRANCISCO - It has never been easy to have a rational conversation
   Verb: been
-  TMV-annotator: presPerf/indicative/passive/prog=no
   TMV (mapped):  present-perfect-indicative-passive
   Our extractor: present-perfect-indicative-active
+
+
+UNMATCHED CONVERTED ROWS:
+----------------------------------------------------------------------
+
+None

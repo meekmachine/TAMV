@@ -1,0 +1,2 @@
+sentence_index	sentence	verb	gold_label	predicted_label	predicted_verb_text	predicted_lemma	auxiliary_chain
+2	SAN FRANCISCO - It has never been easy to have a rational conversation about the value of gold .	been	present-perfect-indicative-passive	present-perfect-indicative-active	been	be	has
