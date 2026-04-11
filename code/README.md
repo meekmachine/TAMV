@@ -82,6 +82,9 @@ python -m tests.validate_tamv --no-show
 # Phrase-level validation (32 test cases with 43 verb phrases)
 python -m tests.validate_phrases --no-show
 
+# TMV compatibility check on the GitHub-published Mate sample
+python scripts/tmv_alignment_test.py
+
 # Show interactive confusion matrix plots
 python -m tests.validate_tamv
 python -m tests.validate_phrases

@@ -204,7 +204,7 @@
   \item We do not prioritize deep neural models in the core register experiment because the currently labeled document-level register set is relatively small; this limits reliable estimation and can inflate variance without careful regularization and substantially larger labeled corpora.
   \item \textbf{Baselines:}
     \begin{itemize}
-      \item \emph{Intrinsic:} Comparison against TMV-annotator output on Europarl sentences parsed by both Mate (SD) and spaCy (UD).
+      \item \emph{Intrinsic:} Curated TAMV gold suites plus a separate compatibility comparison against the GitHub-published TMV-annotator Mate sample.
       \item \emph{Register:} Majority-class baseline and bag-of-words logistic regression.
       \item \emph{Toxicity:} Majority-class baseline and lexicon-based approaches.
       \item \emph{VAD:} Mean-value baseline and lexicon-only regression.
@@ -217,7 +217,7 @@ We separate intrinsic and extrinsic evaluation by design: Exp 0 measures TAMV ex
 
 \subsection{Intrinsic evaluation: TAMV extraction reliability}
 \begin{itemize}
-  \item Evaluate extracted TAMV against gold annotations derived from Longman Grammar examples: per-dimension accuracy/F1 and joint-label accuracy; error taxonomy. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
+  \item We evaluate extracted TAMV against curated TAMV gold suites derived from Brown examples, user-authored stress tests, and Longman-based phrase examples. Separately, we compare the extractor against the GitHub-published English Mate/TMV sample from TMV-annotator (25 sentences; 35 TMV rows, 27 finite comparable rows). This external sample is a compatibility check against TMV-annotator output, not a standalone human-gold benchmark. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
 \end{itemize}
 
 \subsection{Register prediction (Brown)}
@@ -241,7 +241,7 @@ We separate intrinsic and extrinsic evaluation by design: Exp 0 measures TAMV ex
 
 \section{Results}
 \begin{itemize}
-  \item \textbf{TAMV reliability:} performance on Longman-derived test cases and major error sources. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
+  \item \textbf{TAMV reliability:} the curated TAMV gold suites remain the primary intrinsic benchmark, while the GitHub-published TMV sample provides a small external compatibility check. On that TMV sample, the current alignment report covers 25 sentences, 35 TMV rows, and 27 finite comparable rows, with 96.3\% full TAMV agreement on matched rows. Because this sample is small and compares against TMV-annotator output rather than human gold, it should not be treated as the sole intrinsic claim. \citep{Biber20101999LongmanEnglish,Ramm2017AnnotatingGerman}
   \item \textbf{Register:} Brown prediction performance + interpretable TAMV feature importance; sanity-check alignment with Longman. \citep{19684/682R15.00.,Biber20101999LongmanEnglish} For register prediction, we report comparative performance for majority, BoW, and TAMV-based models, then analyze per-genre confusion patterns to identify where TAMV contributes most strongly. We also inspect top weighted TAMV features per genre to connect predictive behavior back to interpretable grammatical variation.
   \item \textbf{Toxicity:} report classifier results on CGA with baseline comparisons and failure analysis by conversation stage. \citep{Zhang2018ConversationsFailure}
   \item \textbf{VAD:} report per-dimension (V/A/D) performance with regression/classification metrics and lexicon-baseline gaps. \citep{Buechel2017EmoBank:Analysis,Mohammad2018ObtainingWords}
